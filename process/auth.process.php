@@ -68,7 +68,7 @@ class Process extends Database
 
                     if ($row["user_type"] == "ADMIN") {
                         $_SESSION["admin-auth"] = "1";
-                        $url = "admin/dashboard.html";
+                        $url = "admin/";
                     }
 
                     echo json_encode(array(
