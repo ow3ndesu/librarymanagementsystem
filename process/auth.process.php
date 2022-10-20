@@ -13,9 +13,8 @@ class Process extends Database
         $email = $sanitize->sanitizeForEmail($data["email"]);
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
-        $userid = $sanitize->generateUID();
-        $type = "User"; // User, Admin, Provider
-        $status = "0"; // 0 Inactive, 1 Active, 2 Deactivated
+        $type = "Student"; // Student, Librarian/Admin
+        $status = "INACTIVE"; // Inactive, Active, Deactivated
         $createdat = date('m/d/Y');
         $created_at = strval($createdat);
 
@@ -33,8 +32,8 @@ class Process extends Database
         if ($result->num_rows == 1) {
             echo $emailinuse;
         } else {
-            $stmt = $this->conn->prepare("INSERT INTO users(userid, email, password, type, status, created_at) VALUES (?,?,?,?,?,?)");
-            $stmt->bind_param("ssssss", $userid, $email, $passwordmd5, $type, $status, $created_at);
+            $stmt = $this->conn->prepare("INSERT INTO users(email, password, user_type, status, created_at) VALUES (?,?,?,?,?);");
+            $stmt->bind_param("sssss", $email, $passwordmd5, $type, $status, $created_at);
 
             if ($stmt->execute()) {
                 $stmt->close();
@@ -52,7 +51,7 @@ class Process extends Database
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
 
-        $sql = "SELECT * FROM users WHERE email = ? AND type = 'User'";
+        $sql = "SELECT * FROM users WHERE email = ?;";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -62,18 +61,23 @@ class Process extends Database
 
         if ($result->num_rows > 0) {
             if (($row["password"] == $passwordmd5)) {
-                if ($row["status"] == "1") {
+                if ($row["status"] == "ACTIVE") {
                     $_SESSION["authenticated"] = "1";
-                    $_SESSION["userid"] = $row["userid"];
-
+                    $_SESSION["userid"] = $row["user_id"];
                     $url = "pages/home.page.php";
+
+                    if ($row["user_type"] == "ADMIN") {
+                        $_SESSION["admin-auth"] = "1";
+                        $url = "admin/dashboard.html";
+                    }
+
                     echo json_encode(array(
                         "MESSAGE" => "LOGIN_SUCCESS",
                         "URL" => $url
                     ));
-                } else if ($row["status"] == "0") {
+                } else if ($row["status"] == "INACTIVE") {
                     echo json_encode(array(
-                        "MESSAGE" => "ACCOUNT_PENDING",
+                        "MESSAGE" => "ACCOUNT_INACTIVE",
                     ));
                 } else {
                     echo json_encode(array(
@@ -82,7 +86,7 @@ class Process extends Database
                 }
             } else {
                 echo json_encode(array(
-                    "MESSAGE" => "INCORRECT_PASSWORD",
+                    "MESSAGE" => "INCORRECT_COMBINATION",
                 ));
             }
         } else {
