@@ -29,7 +29,7 @@ $("#signinbtn").click(function () {
         $("#logpassword").val("");
         if (res.MESSAGE === "LOGIN_SUCCESS") {
           Swal.fire({
-            title: "Welcome to SFA!",
+            title: "Welcome to LMS!",
             text: "Login Success",
             icon: "success",
             preConfirm: function () {
@@ -39,17 +39,17 @@ $("#signinbtn").click(function () {
               window.location = res.URL;
             },
           });
-        } else if (res.MESSAGE === "ACCOUNT_PENDING") {
+        } else if (res.MESSAGE === "ACCOUNT_INACTIVE") {
           Swal.fire({
             title: "Oopps!",
-            text: "Account is still pending.",
+            text: "Account is still inactive.",
             icon: "error",
             preConfirm: function () {
               $("#login-form")[0].reset();
               $(".submit-btn").removeClass("spinner-border");
             },
           });
-        } else if (res.MESSAGE === "INCORRECT_PASSWORD") {
+        } else if (res.MESSAGE === "INCORRECT_COMBINATION") {
           Swal.fire({
             title: "Oopps!",
             text: "Authentication Failed!",
