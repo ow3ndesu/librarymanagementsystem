@@ -32,6 +32,9 @@ if (isset($_SESSION["admin-auth"])) {
 
     <!-- Custom styles for this page -->
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
 
   <body id="page-top">
@@ -265,14 +268,7 @@ if (isset($_SESSION["admin-auth"])) {
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                  </a>
+
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item logoutbtn">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -306,9 +302,12 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Type</th>
                         <th>Status</th>
                         <th>Created at</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
+                    <tbody id="usersTableBody">
+
+                    </tbody>
                     <tfoot>
                       <tr>
                         <th>User ID</th>
@@ -316,7 +315,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Type</th>
                         <th>Status</th>
                         <th>Created at</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </tfoot>
                     <tbody></tbody>
@@ -363,7 +362,7 @@ if (isset($_SESSION["admin-auth"])) {
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/demo/datatables-demo.js"></script>
+    <script src="assets/js/users.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
