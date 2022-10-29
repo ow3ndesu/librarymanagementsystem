@@ -14,7 +14,7 @@ class Process extends Database
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
         $type = "Student"; // Student, Librarian/Admin
-        $status = "INACTIVE"; // Inactive, Active, Deactivated
+        $status = "DISABLED"; // DISABLED/ENABLED
         $createdat = date('m/d/Y');
         $created_at = strval($createdat);
 

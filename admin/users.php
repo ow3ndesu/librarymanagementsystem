@@ -294,7 +294,7 @@ if (isset($_SESSION["admin-auth"])) {
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="userstable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>User ID</th>
@@ -346,6 +346,71 @@ if (isset($_SESSION["admin-auth"])) {
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row my-2">
+              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                <label for="user_id">User ID.</label>
+                <label class="float-right">:</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="user_id" disabled>
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                <label for="email">Email</label>
+                <label class="float-right">:</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="email" disabled>
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                <label for="user_type">User Type</label>
+                <label class="float-right">:</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="user_type" disabled>
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                <label for="status">Status</label>
+                <label class="float-right">:</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="status" disabled>
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                <label for="created_at">Created at</label>
+                <label class="float-right">:</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="created_at" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary mr-auto" id="enablebtn">Enable User</button>
+            <button type="button" class="btn btn-secondary" id="disablebtn">Disable User</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="assets/vendor/jquery/jquery.min.js"></script>

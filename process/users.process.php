@@ -7,58 +7,6 @@ include_once("sanitize.process.php");
 
 class Process extends Database
 {
-    public function Login($data)
-    {
-        $sanitize = new Sanitize();
-        $email = $sanitize->sanitizeForEmail($data["email"]);
-        $password = $sanitize->sanitizeForString($data["password"]);
-        $passwordmd5 = md5($password);
-
-        $sql = "SELECT * FROM users WHERE email = ?;";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $stmt->close();
-
-        if ($result->num_rows > 0) {
-            if (($row["password"] == $passwordmd5)) {
-                if ($row["status"] == "ACTIVE") {
-                    $_SESSION["authenticated"] = "1";
-                    $_SESSION["userid"] = $row["user_id"];
-                    $url = "pages/home.page.php";
-
-                    if ($row["user_type"] == "ADMIN") {
-                        $_SESSION["admin-auth"] = "1";
-                        $url = "admin/";
-                    }
-
-                    echo json_encode(array(
-                        "MESSAGE" => "LOGIN_SUCCESS",
-                        "URL" => $url
-                    ));
-                } else if ($row["status"] == "INACTIVE") {
-                    echo json_encode(array(
-                        "MESSAGE" => "ACCOUNT_INACTIVE",
-                    ));
-                } else {
-                    echo json_encode(array(
-                        "MESSAGE" => "ACCOUNT_DEACTIVATED",
-                    ));
-                }
-            } else {
-                echo json_encode(array(
-                    "MESSAGE" => "INCORRECT_COMBINATION",
-                ));
-            }
-        } else {
-            echo json_encode(array(
-                "MESSAGE" => "NO_USER_FOUND",
-            ));
-        }
-    }
-
     public function LoadUsers()
     {
         $users = [];
@@ -86,6 +34,54 @@ class Process extends Database
             }
         } else {
             echo 'EXECUTION_ERROR';
+        }
+    }
+
+    public function LoadUser($data)
+    {
+        $user = [];
+        $sanitize = new Sanitize();
+        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+        $userloaded = "USER_LOADED";
+        $nodata = "NO_DATA";
+
+        $stmt = $this->conn->prepare("SELECT user_id, email, user_type, status, created_at FROM users WHERE user_id = ?;");
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+
+        if ($res->num_rows > 0) {
+
+            while ($rows = $res->fetch_assoc()) {
+                $user[] = $rows;
+            }
+
+            echo json_encode(array(
+                "MESSAGE" => $userloaded,
+                "USER" => $user,
+            ));
+        } else {
+            echo $nodata;
+        }
+    }
+
+    public function EditUserStatus($data)
+    {
+
+        $sanitize = new Sanitize();
+        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+        $status = $sanitize->sanitizeForEmail($data["status"]);
+
+        $stmt = $this->conn->prepare("UPDATE users SET status = ? WHERE user_id = ?;");
+        $stmt->bind_param("ss", $status, $user_id);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            echo 'UPDATE_SUCCESSFUL';
+        } else {
+            $stmt->close();
+            echo 'UPDATE_ERROR';
         }
     }
 }
