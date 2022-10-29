@@ -32,6 +32,9 @@ if (isset($_SESSION["admin-auth"])) {
 
     <!-- Custom styles for this page -->
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
 
   <body id="page-top">
@@ -195,7 +198,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="..." />
-                      <div class="status-indicator bg-success"></div>
+                      <div class="quantity-indicator bg-success"></div>
                     </div>
                     <div class="font-weight-bold">
                       <div class="text-truncate">
@@ -208,7 +211,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="..." />
-                      <div class="status-indicator"></div>
+                      <div class="quantity-indicator"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -221,7 +224,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="..." />
-                      <div class="status-indicator bg-warning"></div>
+                      <div class="quantity-indicator bg-warning"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -234,7 +237,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
-                      <div class="status-indicator bg-success"></div>
+                      <div class="quantity-indicator bg-success"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -284,14 +287,15 @@ if (isset($_SESSION["admin-auth"])) {
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
-              <div class="card-header py-3">
+              <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
                   Available Books
                 </h6>
+                <button type="button" class="btn btn-primary ml-auto" id="addBookModalBtn" data-bs-toggle="modal" data-bs-target="#addBookModal">Add Book</button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered text-center" id="bookstable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Book ID</th>
@@ -302,6 +306,9 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Action</th>
                       </tr>
                     </thead>
+                    <tbody id="booksTableBody">
+
+                    </tbody>
                     <tfoot>
                       <tr>
                         <th>Book ID</th>
@@ -341,6 +348,174 @@ if (isset($_SESSION["admin-auth"])) {
       <i class="fas fa-angle-up"></i>
     </a>
 
+    <!-- Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="addBookForm" action="javascript:void(0);" method="POST">
+            <div class="modal-body">
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="book_id">Book ID.</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="book_id" value="Automatically Assigned" disabled>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="title">Title</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="title" minlength="2" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="author">Author</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="author" minlength="4" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="description">Description</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <textarea class="form-control" id="description" minlength="8" required></textarea>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="quantity">Quantity</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="number" class="form-control" id="quantity" min="1" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="status">Status</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <!-- <input type="text" class="form-control" id="status"> -->
+                  <select class="form-control" name="status" id="status" required>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Book</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="updateBookModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateBookModalLabel">Edit Book</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="updateBookForm" action="javascript:void(0);" method="POST">
+            <div class="modal-body">
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newbook_id">Book ID.</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="newbook_id" readonly>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newtitle">Title</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="newtitle" minlength="2" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newauthor">Author</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="newauthor" minlength="4" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newdescription">Description</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <textarea class="form-control" id="newdescription" minlength="8" required></textarea>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newquantity">Quantity</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="number" class="form-control" id="newquantity" min="1" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="newstatus">Status</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <!-- <input type="text" class="form-control" id="status"> -->
+                  <select class="form-control" name="status" id="newstatus" required>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="date">Date</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="date" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="assets/vendor/jquery/jquery.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -356,7 +531,7 @@ if (isset($_SESSION["admin-auth"])) {
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/demo/datatables-demo.js"></script>
+    <script src="assets/js/books.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>

@@ -61,9 +61,10 @@ class Process extends Database
 
         if ($result->num_rows > 0) {
             if (($row["password"] == $passwordmd5)) {
-                if ($row["status"] == "ACTIVE") {
+                if ($row["status"] == "ENABLED") {
                     $_SESSION["authenticated"] = "1";
                     $_SESSION["userid"] = $row["user_id"];
+                    $_SESSION["user_type"] = $row["user_type"];
                     $url = "pages/home.page.php";
 
                     if ($row["user_type"] == "ADMIN") {
@@ -75,7 +76,7 @@ class Process extends Database
                         "MESSAGE" => "LOGIN_SUCCESS",
                         "URL" => $url
                     ));
-                } else if ($row["status"] == "INACTIVE") {
+                } else if ($row["status"] == "DISABLED") {
                     echo json_encode(array(
                         "MESSAGE" => "ACCOUNT_INACTIVE",
                     ));
@@ -93,6 +94,47 @@ class Process extends Database
             echo json_encode(array(
                 "MESSAGE" => "NO_USER_FOUND",
             ));
+        }
+    }
+
+    public function LoadProfile($data)
+    {
+        $user_type = $_SESSION["user_type"];
+        $user_id = $_SESSION["userid"];
+
+        if ($user_type == 'ADMIN') {
+            $sql = "SELECT * FROM admins WHERE user_id = ?;";
+        } else {
+            $sql = "SELECT * FROM students WHERE user_id = ?;";
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $stmt->close();
+
+                while ($row = $result->fetch_assoc()) {
+                    if (isset($row["admin_id"]) && $row["admin_id"]) {
+                        $_SESSION['admin_id'] = $row['admin_id'];
+                    } else if (isset($row["student_id"]) && $row["student_id"]) {
+                        $_SESSION['student_id'] = $row['student_id'];
+                    }
+                }
+
+                echo json_encode(array(
+                    "MESSAGE" => "PROFILE_LOADED",
+                ));
+            } else {
+                echo json_encode(array(
+                    "MESSAGE" => "NO_PROFILE",
+                ));
+            }
+        } else {
+            echo 'EXECUTION_ERROR';
         }
     }
 

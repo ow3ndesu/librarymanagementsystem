@@ -419,6 +419,7 @@ if (isset($_SESSION["admin-auth"])) {
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/profile.js"></script>
   </body>
 
   </html>

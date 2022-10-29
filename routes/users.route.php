@@ -13,3 +13,7 @@ if (isset($_POST["action"]) && $_POST["action"] == "LoadUser") {
 if (isset($_POST["action"]) && $_POST["action"] == "EditUserStatus") {
     $process->EditUserStatus($_POST);
 }
+
+if (isset($_POST["action"]) && $_POST["action"] == "DeleteUserAccount") {
+    $process->DeleteUserAccount($_POST);
+}

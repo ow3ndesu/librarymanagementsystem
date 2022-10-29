@@ -68,7 +68,6 @@ class Process extends Database
 
     public function EditUserStatus($data)
     {
-
         $sanitize = new Sanitize();
         $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
         $status = $sanitize->sanitizeForEmail($data["status"]);
@@ -82,6 +81,23 @@ class Process extends Database
         } else {
             $stmt->close();
             echo 'UPDATE_ERROR';
+        }
+    }
+
+    public function DeleteUserAccount($data)
+    {
+        $sanitize = new Sanitize();
+        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+
+        $stmt = $this->conn->prepare("DELETE FROM users WHERE user_id = ?;");
+        $stmt->bind_param("s", $user_id);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            echo 'DELETE_SUCCESSFUL';
+        } else {
+            $stmt->close();
+            echo 'DELETE_ERROR';
         }
     }
 }

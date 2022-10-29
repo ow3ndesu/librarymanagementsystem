@@ -1,6 +1,8 @@
 $(document).ready(function () {
-    $("#userstable").DataTable();
-    loadUsers();
+    $("#userstable").DataTable({
+        pageLength: 5,
+    });
+    loadEverything();
 });
 
 function loadEverything() {
@@ -21,9 +23,11 @@ function loadUsers() {
                 $("#userstable").DataTable().clear();
                 $("#userstable").DataTable().destroy();
             }
-            $("#userstablebody")
+            $("#usersTableBody")
                 .empty()
-                .append("<tr><td colspan='6'>Loading! Please wait..</td></tr>");
+                .append(
+                    "<tr><td colspan='6'>Loading! Please wait...</td></tr>"
+                );
         },
         success: function (response) {
             console.log(response);
@@ -61,7 +65,15 @@ function loadUsers() {
                     );
                 });
 
-                $("#userstable").DataTable();
+                $("#userstable").DataTable({
+                    pageLength: 5,
+                });
+            } else {
+                $("#usersTableBody")
+                    .empty()
+                    .append(
+                        "<tr><td colspan='6'>Oops! No registered users found.</td></tr>"
+                    );
             }
         },
         error: function (error) {
@@ -81,6 +93,26 @@ function EditUserStatus(user_id, status) {
         },
         beforeSend: function () {
             console.log("editing status...");
+        },
+        success: function (response) {
+            return response;
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function DeleteUserAccount(user_id) {
+    $.ajax({
+        url: "../routes/users.route.php",
+        type: "POST",
+        data: {
+            action: "DeleteUserAccount",
+            user_id: user_id,
+        },
+        beforeSend: function () {
+            console.log("deleting user account...");
         },
         success: function (response) {
             return response;
@@ -192,5 +224,35 @@ function viewUser(user_id) {
         error: function (err) {
             console.log(err);
         },
+    });
+}
+
+function deleteUser(user_id) {
+    Swal.fire({
+        title: "Delete Account?",
+        icon: "question",
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        allowOutsideClick: false,
+        customClass: {
+            input: "text-center",
+        },
+        preConfirm: (e) => {
+            return DeleteUserAccount(user_id);
+        },
+    }).then((result) => {
+        if (result.isDismissed) {
+            Swal.fire("Backin' out?", "Nothing Changes!", "info");
+        } else {
+            if (result.value != true) {
+                Swal.fire("Eek!", "Something went wrong?", "error");
+            } else {
+                Swal.fire("Hooray!", "Account Deleted!", "success").then(() => {
+                    loadUsers();
+                });
+            }
+        }
     });
 }
