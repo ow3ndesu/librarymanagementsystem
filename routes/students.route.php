@@ -14,9 +14,9 @@ if (isset($_POST["action"]) && $_POST["action"] == "AddStudent") {
     $process->AddStudent($_POST);
 }
 
-// if (isset($_POST["action"]) && $_POST["action"] == "UpdateStudent") {
-//     $process->UpdateStudent($_POST);
-// }
+if (isset($_POST["action"]) && $_POST["action"] == "UpdateStudent") {
+    $process->UpdateStudent($_POST);
+}
 
 if (isset($_POST["action"]) && $_POST["action"] == "DeleteStudent") {
     $process->DeleteStudent($_POST);

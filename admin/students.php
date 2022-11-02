@@ -393,73 +393,69 @@ if (isset($_SESSION["admin-auth"])) {
       </div>
     </div>
 
-    <div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="updateBookModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="updateBookModalLabel">Edit Book</h5>
+            <h5 class="modal-title" id="updateStudentModalLabel">Edit Book</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form id="updateBookForm" action="javascript:void(0);" method="POST">
+          <form id="updateStudentForm" action="javascript:void(0);" method="POST">
             <div class="modal-body">
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newbook_id">Book ID.</label>
+                  <label for="newstudent_id">Book ID.</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="newbook_id" readonly>
+                  <input type="text" class="form-control" id="newstudent_id" readonly>
                 </div>
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newtitle">Title</label>
+                  <label for="newfirstname">Firstname</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="newtitle" minlength="2" required>
+                  <input type="text" class="form-control" id="newfirstname" minlength="2">
                 </div>
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newauthor">Author</label>
+                  <label for="newmiddlename">Middlename</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="newauthor" minlength="4" required>
+                  <input type="text" class="form-control" id="newmiddlename" minlength="1">
                 </div>
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newdescription">Description</label>
+                  <label for="newlastname">Lastname</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <textarea class="form-control" id="newdescription" minlength="8" required></textarea>
+                  <input type="text" class="form-control" id="newlastname" minlength="2">
                 </div>
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newquantity">Quantity</label>
+                  <label for="newaddress">Address</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="number" class="form-control" id="newquantity" min="1" required>
+                  <textarea class="form-control" id="newaddress" minlength="8"></textarea>
                 </div>
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newstatus">Status</label>
+                  <label for="newcontact_no">Contact No</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">
-                  <!-- <input type="text" class="form-control" id="status"> -->
-                  <select class="form-control" name="status" id="newstatus" required>
-                    <option value="ACTIVE">Active</option>
-                    <option value="INACTIVE">Inactive</option>
-                  </select>
+                  <input type="number" class="form-control" id="newcontact_no" minlength="11">
                 </div>
               </div>
               <div class="row my-2">

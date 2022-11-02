@@ -63,7 +63,7 @@ function loadStudents() {
                                 : "-") +
                             `</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-primary me-2" onclick="viewBook(\'` +
+                                <button type="button" class="btn btn-primary me-2" onclick="viewStudent(\'` +
                             element.student_id +
                             `\')"><i class="fa-solid fa-eye"></i></button>
                                 <button type="button" class="btn btn-danger" onclick="deleteBook(\'` +
@@ -170,21 +170,30 @@ function AddStudent(user_id) {
     });
 }
 
-function updateBook(book_id, title, author, description, quantity, status) {
+function UpdateStudent(
+    student_id,
+    firstname,
+    middlename,
+    lastname,
+    address,
+    contact_no,
+    created_at
+) {
     $.ajax({
-        url: "../routes/books.route.php",
+        url: "../routes/students.route.php",
         type: "POST",
         data: {
-            action: "UpdateBook",
-            book_id: book_id,
-            title: title,
-            author: author,
-            description: description,
-            quantity: quantity,
-            status: status,
+            action: "UpdateStudent",
+            student_id: student_id,
+            firstname: firstname,
+            middlename: middlename,
+            lastname: lastname,
+            address: address,
+            contact_no: contact_no,
+            created_at: created_at,
         },
         beforeSend: function () {
-            console.log("updating book...");
+            console.log("updating student...");
         },
         success: function (response) {
             return response;
@@ -195,13 +204,13 @@ function updateBook(book_id, title, author, description, quantity, status) {
     });
 }
 
-function DeleteBook(book_id) {
+function DeleteBook(student_id) {
     $.ajax({
         url: "../routes/books.route.php",
         type: "POST",
         data: {
             action: "DeleteBook",
-            book_id: book_id,
+            student_id: student_id,
         },
         beforeSend: function () {
             console.log("deleting book...");
@@ -286,50 +295,71 @@ function addStudent(user_id) {
     });
 }
 
-function viewBook(book_id) {
-    $("#book_id").val(book_id);
+function viewStudent(student_id) {
+    $("#student_id").val(student_id);
     $.ajax({
-        url: "../routes/books.route.php",
+        url: "../routes/students.route.php",
         type: "POST",
         data: {
-            action: "LoadBook",
-            book_id: book_id,
+            action: "LoadStudent",
+            student_id: student_id,
         },
         dataType: "JSON",
         beforeSend: function () {
-            console.log("fetching book...");
+            console.log("fetching student...");
         },
         success: function (response) {
-            response.BOOK.forEach((element) => {
+            response.STUDENT.forEach((element) => {
                 console.log(element);
-                $("#newbook_id").val(element.book_id);
-                $("#newtitle").val(element.title);
-                $("#newauthor").val(element.author);
-                $("#newdescription").val(element.description);
-                $("#newquantity").val(element.quantity);
-                $("#newstatus").val(element.status);
-                $("#date").val(element.inserted_at);
-
-                if (element.status == "ENABLED") {
-                    $("#enablebtn").prop("disabled", true);
-                } else if (element.status == "DISABLED") {
-                    $("#disablebtn").prop("disabled", true);
-                }
+                element.student_id != ""
+                    ? $("#newstudent_id")
+                          .val(element.student_id)
+                          .prop("required", true)
+                    : $("#newstudent_id").prop("disabled", true);
+                element.firstname != ""
+                    ? $("#newfirstname")
+                          .val(element.firstname)
+                          .prop("required", true)
+                    : $("#newfirstname").prop("disabled", true);
+                element.middlename != ""
+                    ? $("#newmiddlename")
+                          .val(element.middlename)
+                          .prop("required", true)
+                    : $("#newmiddlename").prop("disabled", true);
+                element.lastname != ""
+                    ? $("#newlastname")
+                          .val(element.lastname)
+                          .prop("required", true)
+                    : $("#newlastname").prop("disabled", true);
+                element.address != ""
+                    ? $("#newaddress")
+                          .val(element.address)
+                          .prop("required", true)
+                    : $("#newaddress").prop("disabled", true);
+                element.contact_no != ""
+                    ? $("#newcontact_no")
+                          .val(element.contact_no)
+                          .prop("required", true)
+                    : $("#newcontact_no").prop("disabled", true);
+                element.created_at != ""
+                    ? $("#date").val(element.created_at).prop("disabled", true)
+                    : $("#date").prop("disabled", true);
             }),
-                $("#updateBookModal").modal("show");
+                $("#updateStudentModal").modal("show");
 
-            $("#updateBookForm")
+            $("#updateStudentForm")
                 .unbind("submit")
                 .submit(function () {
-                    const book_id = $("#newbook_id").val();
-                    const title = $("#newtitle").val();
-                    const author = $("#newauthor").val();
-                    const description = $("#newdescription").val();
-                    const quantity = $("#newquantity").val();
-                    const status = $("#newstatus").val();
+                    const student_id = $("#newstudent_id").val() || "";
+                    const firstname = $("#newfirstname").val() || "";
+                    const middlename = $("#newmiddlename").val() || "";
+                    const lastname = $("#newlastname").val() || "";
+                    const address = $("#newaddress").val() || "";
+                    const contact_no = $("#newcontact_no").val() || "";
+                    const created_at = $("#date").val() || "";
 
                     Swal.fire({
-                        title: "Update Book?",
+                        title: "Update Student?",
                         icon: "question",
                         showCancelButton: true,
                         showLoaderOnConfirm: true,
@@ -340,13 +370,14 @@ function viewBook(book_id) {
                             input: "text-center",
                         },
                         preConfirm: (e) => {
-                            return updateBook(
-                                book_id,
-                                title,
-                                author,
-                                description,
-                                quantity,
-                                status
+                            return UpdateStudent(
+                                student_id,
+                                firstname,
+                                middlename,
+                                lastname,
+                                address,
+                                contact_no,
+                                created_at
                             );
                         },
                     }).then((result) => {
@@ -369,7 +400,7 @@ function viewBook(book_id) {
                                     "Book Updated!",
                                     "success"
                                 ).then(() => {
-                                    $("#updateBookModal").modal("hide"),
+                                    $("#updateStudentModal").modal("hide"),
                                         loadStudents();
                                 });
                             }
@@ -383,7 +414,7 @@ function viewBook(book_id) {
     });
 }
 
-function deleteBook(book_id) {
+function deleteBook(student_id) {
     Swal.fire({
         title: "Delete Book?",
         icon: "question",
@@ -396,7 +427,7 @@ function deleteBook(book_id) {
             input: "text-center",
         },
         preConfirm: (e) => {
-            return DeleteBook(book_id);
+            return DeleteBook(student_id);
         },
     }).then((result) => {
         if (result.isDismissed) {

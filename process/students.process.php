@@ -103,6 +103,30 @@ class Process extends Database
         }
     }
 
+    public function UpdateStudent($data)
+    {
+        $sanitize = new Sanitize();
+        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
+        $firstname = $sanitize->sanitizeForEmail($data["firstname"]);
+        $middlename = $sanitize->sanitizeForEmail($data["middlename"]);
+        $lastname = $sanitize->sanitizeForEmail($data["lastname"]);
+        $address = $sanitize->sanitizeForEmail($data["address"]);
+        $contact_no = $sanitize->sanitizeForEmail($data["contact_no"]);
+        $created_at = $sanitize->sanitizeForString($data["created_at"]);
+
+        $stmt = $this->conn->prepare("UPDATE students SET firstname = ?, middlename = ?, lastname = ?, address = ?, contact_no = ?, created_at = ? WHERE student_id = ?;");
+        $stmt->bind_param("sssssss", $firstname, $middlename, $lastname, $address, $contact_no, $created_at, $student_id);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+
+            echo 'UPDATE_SUCCESSFUL';
+        } else {
+            $stmt->close();
+            echo 'UPDATE_ERROR';
+        }
+    }
+
     public function DeleteStudent($data)
     {
         $sanitize = new Sanitize();
