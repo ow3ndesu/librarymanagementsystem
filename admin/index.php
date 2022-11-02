@@ -57,7 +57,7 @@ if (isset($_SESSION["admin-auth"])) {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Major</div>
+        <div class="sidebar-heading">Minor</div>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
@@ -247,7 +247,7 @@ if (isset($_SESSION["admin-auth"])) {
                       </div>
                     </div>
                   </a>
-                  <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                  <a class="dropdown-item text-center small text-gray-500" href="messages.php">Read More Messages</a>
                 </div>
               </li>
 

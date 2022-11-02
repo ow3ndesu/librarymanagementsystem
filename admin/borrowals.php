@@ -15,7 +15,7 @@ if (isset($_SESSION["admin-auth"])) {
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>LMS Admin - Users</title>
+    <title>LMS Admin - Books</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
@@ -64,9 +64,33 @@ if (isset($_SESSION["admin-auth"])) {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
+        <div class="sidebar-heading">Major</div>
+
+        <!-- Nav Item - Borrowals -->
+        <li class="nav-item active">
+          <a class="nav-link" href="borrowals.php">
+            <i class="fas fa-fw fa-book-bookmark"></i>
+            <span>Borrowals</span></a>
+        </li>
+
+        <!-- Nav Item - Returns -->
+        <li class="nav-item">
+          <a class="nav-link" href="returns.php">
+            <i class="fas fa-fw fa-file-invoice"></i>
+            <span>Returns</span></a>
+        </li>
+
+        <!-- Nav Item - Messages -->
+        <li class="nav-item">
+          <a class="nav-link" href="messages.php">
+            <i class="fas fa-fw fa-message"></i>
+            <span>Messages</span></a>
+        </li>
+
+        <!-- Heading -->
         <div class="sidebar-heading">Minor</div>
 
-        <!-- Nav Item - Books -->
+        <!-- Nav Item - Tables -->
         <li class="nav-item">
           <a class="nav-link" href="books.php">
             <i class="fas fa-fw fa-book"></i>
@@ -80,7 +104,7 @@ if (isset($_SESSION["admin-auth"])) {
         </li>
 
         <!-- Nav Item - Users -->
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="users.php">
             <i class="fas fa-fw fa-user"></i>
             <span>Users</span></a>
@@ -204,7 +228,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="..." />
-                      <div class="status-indicator bg-success"></div>
+                      <div class="quantity-indicator bg-success"></div>
                     </div>
                     <div class="font-weight-bold">
                       <div class="text-truncate">
@@ -217,7 +241,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="..." />
-                      <div class="status-indicator"></div>
+                      <div class="quantity-indicator"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -230,7 +254,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="..." />
-                      <div class="status-indicator bg-warning"></div>
+                      <div class="quantity-indicator bg-warning"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -243,7 +267,7 @@ if (isset($_SESSION["admin-auth"])) {
                   <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
                       <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
-                      <div class="status-indicator bg-success"></div>
+                      <div class="quantity-indicator bg-success"></div>
                     </div>
                     <div>
                       <div class="text-truncate">
@@ -289,39 +313,39 @@ if (isset($_SESSION["admin-auth"])) {
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Users</h1>
+            <h1 class="h3 mb-2 text-gray-800">Borrowals</h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
-              <div class="card-header py-3">
+              <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Registered Users
+                  Successful Borrowals
                 </h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered text-center" id="userstable" width="100%" cellspacing="0">
+                  <table class="table table-bordered text-center" id="borrowalstable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>User ID</th>
-                        <th>Email</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Created at</th>
-                        <th class="text-center">Action</th>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="usersTableBody">
+                    <tbody id="borrowalsTableBody">
 
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>User ID</th>
-                        <th>Email</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Created at</th>
-                        <th class="text-center">Action</th>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
+                        <th>Action</th>
                       </tr>
                     </tfoot>
                     <tbody></tbody>
@@ -354,65 +378,218 @@ if (isset($_SESSION["admin-auth"])) {
     </a>
 
     <!-- Modal -->
-    <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="viewUserModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg" id="updateBorrowalModal" tabindex="-1" role="dialog" aria-labelledby="updateBorrowalModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+            <h5 class="modal-title" id="updateBorrowalModalLabel">View Borrowal</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <div class="row my-2">
-              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                <label for="user_id">User ID.</label>
-                <label class="float-right">:</label>
-              </div>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="user_id" disabled>
+            <div class="row">
+              <div class="col-12">
+                <h5 class="text-center">Borrow Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="borrow_id">Borrow ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="borrow_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="filed">Filed</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="filed" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="due">Due</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="due" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="status">Status</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="status" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="modify_by">Modify by</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="modify_by" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="modify_at">Modify at</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="modify_at" readonly>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row my-2">
-              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                <label for="email">Email</label>
-                <label class="float-right">:</label>
+            <hr>
+            <div class="row">
+              <div class="col-6">
+                <h5 class="text-center">Student Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="student_id">Student ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="student_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="user_id">User ID</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="user_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="fullname">Fullname</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="fullname" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="email">Email</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="email" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="address">Address</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="address" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="contact_no">Contact No</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="contact_no" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="registration_date">Date</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="registration_date" readonly>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="email" disabled>
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                <label for="user_type">User Type</label>
-                <label class="float-right">:</label>
-              </div>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="user_type" disabled>
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                <label for="status">Status</label>
-                <label class="float-right">:</label>
-              </div>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="status" disabled>
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                <label for="created_at">Created at</label>
-                <label class="float-right">:</label>
-              </div>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="created_at" disabled>
+              <div class="col-6">
+                <h5 class="text-center">Book Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newbook_id">Book ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newbook_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newtitle">Title</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newtitle" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newauthor">Author</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newauthor" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newdescription">Description</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <textarea class="form-control" id="newdescription" readonly></textarea>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newquantity">Quantity</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="number" class="form-control" id="newquantity" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newstatus">Status</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <!-- <input type="text" class="form-control" id="status"> -->
+                    <select class="form-control" name="status" id="newstatus" disabled>
+                      <option value="ACTIVE">Active</option>
+                      <option value="INACTIVE">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="date">Date</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="date" readonly>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary mr-auto" id="enablebtn">Enable User</button>
-            <button type="button" class="btn btn-secondary" id="disablebtn">Disable User</button>
+            <button type="button" class="btn btn-primary btn-block my-auto" id="approveBorrowalBtn">Approve Borrowal</button>
+            <button type="button" class="btn btn-secondary btn-block" id="disapproveBorrowalBtn">Disapprove Borrowal</button>
           </div>
         </div>
       </div>
@@ -433,7 +610,7 @@ if (isset($_SESSION["admin-auth"])) {
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/users.js"></script>
+    <script src="assets/js/borrowals.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>

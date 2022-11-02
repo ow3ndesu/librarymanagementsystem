@@ -64,7 +64,7 @@ if (isset($_SESSION["admin-auth"])) {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Major</div>
+        <div class="sidebar-heading">Minor</div>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
@@ -256,7 +256,7 @@ if (isset($_SESSION["admin-auth"])) {
                       </div>
                     </div>
                   </a>
-                  <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                  <a class="dropdown-item text-center small text-gray-500" href="messages.php">Read More Messages</a>
                 </div>
               </li>
 
@@ -397,7 +397,7 @@ if (isset($_SESSION["admin-auth"])) {
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="updateStudentModalLabel">Edit Book</h5>
+            <h5 class="modal-title" id="updateStudentModalLabel">Edit Student</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
