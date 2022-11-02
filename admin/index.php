@@ -66,6 +66,12 @@ if (isset($_SESSION["admin-auth"])) {
             <span>Books</span></a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="students.php">
+            <i class="fas fa-fw fa-graduation-cap"></i>
+            <span>Students</span></a>
+        </li>
+
         <!-- Nav Item - Users -->
         <li class="nav-item">
           <a class="nav-link" href="users.php">
@@ -250,7 +256,7 @@ if (isset($_SESSION["admin-auth"])) {
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['fullname']; ?></span>
                   <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -281,8 +287,8 @@ if (isset($_SESSION["admin-auth"])) {
             </div>
 
             <!-- Content Row -->
-            <div class="row">
-              <!-- Earnings (Monthly) Card Example -->
+            <!-- <div class="row">
+              <!-- Earnings (Monthly) Card Example
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
@@ -303,7 +309,7 @@ if (isset($_SESSION["admin-auth"])) {
                 </div>
               </div>
 
-              <!-- Earnings (Monthly) Card Example -->
+              <!-- Earnings (Monthly) Card Example
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                   <div class="card-body">
@@ -324,7 +330,7 @@ if (isset($_SESSION["admin-auth"])) {
                 </div>
               </div>
 
-              <!-- Earnings (Monthly) Card Example -->
+              <!-- Earnings (Monthly) Card Example
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                   <div class="card-body">
@@ -354,7 +360,7 @@ if (isset($_SESSION["admin-auth"])) {
                 </div>
               </div>
 
-              <!-- Pending Requests Card Example -->
+              <!-- Pending Requests Card Example
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
@@ -374,7 +380,8 @@ if (isset($_SESSION["admin-auth"])) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+
           </div>
           <!-- /.container-fluid -->
         </div>

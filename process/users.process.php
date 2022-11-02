@@ -37,6 +37,36 @@ class Process extends Database
         }
     }
 
+    public function LoadNonEnabledUsers()
+    {
+        $users = [];
+        $sql = "SELECT * FROM users WHERE user_type != 'ADMIN' AND status != 'ENABLED';";
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $stmt->close();
+
+                while ($row = $result->fetch_assoc()) {
+                    $users[] = $row;
+                }
+
+                echo json_encode(array(
+                    "MESSAGE" => "USERS_LOADED",
+                    "USERS" => $users
+                ));
+            } else {
+                echo json_encode(array(
+                    "MESSAGE" => "NO_USER",
+                ));
+            }
+        } else {
+            echo 'EXECUTION_ERROR';
+        }
+    }
+
     public function LoadUser($data)
     {
         $user = [];
@@ -77,7 +107,30 @@ class Process extends Database
 
         if ($stmt->execute()) {
             $stmt->close();
-            echo 'UPDATE_SUCCESSFUL';
+            if ($status = 'ENABLED') {
+                $stmt = $this->conn->prepare("SELECT * FROM students WHERE user_id = ?");
+                $stmt->bind_param("s", $user_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows == 0) {
+                    $stmt->close();
+                    $student_id = $sanitize->generateSID();
+                    $created_at = date('m/d/Y');
+
+                    $stmt = $this->conn->prepare("INSERT INTO students (student_id, user_id, created_at) VALUES (?, ?, ?);");
+                    $stmt->bind_param("sss", $student_id, $user_id, $created_at);
+                    $stmt->execute();
+                    $stmt->close();
+
+                    echo 'UPDATE_SUCCESSFUL';
+                } else {
+                    $stmt->close();
+                    echo 'UPDATE_SUCCESSFUL';
+                }
+            } else {
+                echo 'UPDATE_SUCCESSFUL';
+            }
         } else {
             $stmt->close();
             echo 'UPDATE_ERROR';

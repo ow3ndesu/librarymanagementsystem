@@ -123,6 +123,8 @@ class Process extends Database
                     } else if (isset($row["student_id"]) && $row["student_id"]) {
                         $_SESSION['student_id'] = $row['student_id'];
                     }
+
+                    $_SESSION['fullname'] = $row['firstname'] . ' ' . $row['lastname'];
                 }
 
                 echo json_encode(array(

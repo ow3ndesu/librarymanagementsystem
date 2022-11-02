@@ -15,7 +15,7 @@ if (isset($_SESSION["admin-auth"])) {
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>LMS Admin - Books</title>
+    <title>LMS Admin - Students</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
@@ -67,13 +67,13 @@ if (isset($_SESSION["admin-auth"])) {
         <div class="sidebar-heading">Major</div>
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="books.php">
             <i class="fas fa-fw fa-book"></i>
             <span>Books</span></a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="students.php">
             <i class="fas fa-fw fa-graduation-cap"></i>
             <span>Students</span></a>
@@ -289,39 +289,39 @@ if (isset($_SESSION["admin-auth"])) {
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Books</h1>
+            <h1 class="h3 mb-2 text-gray-800">Students</h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Available Books
+                  Registered Students
                 </h6>
-                <button type="button" class="btn btn-primary ml-auto" id="addBookModalBtn" data-bs-toggle="modal" data-bs-target="#addBookModal">Add Book</button>
+                <button type="button" class="btn btn-primary ml-auto" id="addStudentModalBtn" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered text-center" id="bookstable" width="100%" cellspacing="0">
+                  <table class="table table-bordered text-center" id="studentstable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Book ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Student ID</th>
+                        <th>Firstname</th>
+                        <th>Middlename</th>
+                        <th>Lastname</th>
+                        <th>Contact No.</th>
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="booksTableBody">
+                    <tbody id="studentsTableBody">
 
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Book ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Student ID</th>
+                        <th>Firstname</th>
+                        <th>Middlename</th>
+                        <th>Lastname</th>
+                        <th>Contact No.</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>
@@ -355,81 +355,40 @@ if (isset($_SESSION["admin-auth"])) {
     </a>
 
     <!-- Modal -->
-    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
+            <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form id="addBookForm" action="javascript:void(0);" method="POST">
-            <div class="modal-body">
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="book_id">Book ID.</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="book_id" value="Automatically Assigned" disabled>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="title">Title</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="title" minlength="2" required>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="author">Author</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="author" minlength="4" required>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="description">Description</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <textarea class="form-control" id="description" minlength="8" required></textarea>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="quantity">Quantity</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="number" class="form-control" id="quantity" min="1" required>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="status">Status</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <!-- <input type="text" class="form-control" id="status"> -->
-                  <select class="form-control" name="status" id="status" required>
-                    <option value="ACTIVE">Active</option>
-                    <option value="INACTIVE">Inactive</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Add Book</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
-          </form>
+          <div class="modal-body">
+            <table class="table table-bordered text-center" id="userstable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Email</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>User ID</th>
+                  <th>Email</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </tfoot>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+          </div>
         </div>
       </div>
     </div>
@@ -537,7 +496,7 @@ if (isset($_SESSION["admin-auth"])) {
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/books.js"></script>
+    <script src="assets/js/students.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
