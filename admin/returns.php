@@ -15,7 +15,7 @@ if (isset($_SESSION["admin-auth"])) {
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>LMS Admin - Students</title>
+    <title>LMS Admin - Returns</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
@@ -74,7 +74,7 @@ if (isset($_SESSION["admin-auth"])) {
         </li>
 
         <!-- Nav Item - Returns -->
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="returns.php">
             <i class="fas fa-fw fa-file-invoice"></i>
             <span>Returns</span></a>
@@ -97,7 +97,7 @@ if (isset($_SESSION["admin-auth"])) {
             <span>Books</span></a>
         </li>
 
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="students.php">
             <i class="fas fa-fw fa-graduation-cap"></i>
             <span>Students</span></a>
@@ -313,39 +313,38 @@ if (isset($_SESSION["admin-auth"])) {
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Students</h1>
+            <h1 class="h3 mb-2 text-gray-800">Returns</h1>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Registered Students
+                  Successful and Incoming Returns
                 </h6>
-                <button type="button" class="btn btn-primary ml-auto" id="addStudentModalBtn" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered text-center" id="studentstable" width="100%" cellspacing="0">
+                  <table class="table table-bordered text-center" id="returnstable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Student ID</th>
-                        <th>Firstname</th>
-                        <th>Middlename</th>
-                        <th>Lastname</th>
-                        <th>Contact No.</th>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="studentsTableBody">
+                    <tbody id="returnsTableBody">
 
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Student ID</th>
-                        <th>Firstname</th>
-                        <th>Middlename</th>
-                        <th>Lastname</th>
-                        <th>Contact No.</th>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>
@@ -379,124 +378,219 @@ if (isset($_SESSION["admin-auth"])) {
     </a>
 
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="updateReturnModal" tabindex="-1" role="dialog" aria-labelledby="updateReturnModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
+            <h5 class="modal-title" id="updateReturnModalLabel">View Return</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <table class="table table-bordered text-center" id="userstable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Email</th>
-                  <th class="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody id="usersTableBody">
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>User ID</th>
-                  <th>Email</th>
-                  <th class="text-center">Action</th>
-                </tr>
-              </tfoot>
-              <tbody></tbody>
-            </table>
+            <div class="row">
+              <div class="col-12">
+                <h5 class="text-center">Borrow Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="borrow_id">Borrow ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="borrow_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="filed">Filed</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="filed" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="due">Due</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="due" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="status">Status</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="status" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="modify_by">Modify by</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="modify_by" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="modify_at">Modify at</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="modify_at" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-6">
+                <h5 class="text-center">Student Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="student_id">Student ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="student_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="user_id">User ID</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="user_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="fullname">Fullname</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="fullname" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="email">Email</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="email" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="address">Address</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="address" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="contact_no">Contact No</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="contact_no" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="registration_date">Date</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="registration_date" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <h5 class="text-center">Book Details</h5>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newbook_id">Book ID.</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newbook_id" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newtitle">Title</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newtitle" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newauthor">Author</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="newauthor" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newdescription">Description</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <textarea class="form-control" id="newdescription" readonly></textarea>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newquantity">Quantity</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="number" class="form-control" id="newquantity" readonly>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="newstatus">Status</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <!-- <input type="text" class="form-control" id="status"> -->
+                    <select class="form-control" name="status" id="newstatus" disabled>
+                      <option value="ACTIVE">Active</option>
+                      <option value="INACTIVE">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                    <label for="date">Date</label>
+                    <label class="float-right">:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" id="date" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+            <button type="button" class="btn btn-primary btn-block my-auto" id="approveReturnBtn">Approve Return</button>
+            <button type="button" class="btn btn-secondary btn-block" id="disapproveReturnBtn">Disapprove Return</button>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="updateStudentModalLabel">Edit Student</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form id="updateStudentForm" action="javascript:void(0);" method="POST">
-            <div class="modal-body">
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newstudent_id">Book ID.</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="newstudent_id" readonly>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newfirstname">Firstname</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="newfirstname" minlength="2">
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newmiddlename">Middlename</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="newmiddlename" minlength="1">
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newlastname">Lastname</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="newlastname" minlength="2">
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newaddress">Address</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <textarea class="form-control" id="newaddress" minlength="8"></textarea>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newcontact_no">Contact No</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="number" class="form-control" id="newcontact_no" minlength="11">
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="date">Date</label>
-                  <label class="float-right">:</label>
-                </div>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="date" readonly>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save Changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -516,7 +610,7 @@ if (isset($_SESSION["admin-auth"])) {
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/students.js"></script>
+    <script src="assets/js/returns.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>

@@ -28,6 +28,9 @@ if (isset($_SESSION["admin-auth"])) {
 
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
 
   <body id="page-top">
@@ -55,6 +58,30 @@ if (isset($_SESSION["admin-auth"])) {
 
         <!-- Divider -->
         <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">Major</div>
+
+        <!-- Nav Item - Borrowals -->
+        <li class="nav-item">
+          <a class="nav-link" href="borrowals.php">
+            <i class="fas fa-fw fa-book-bookmark"></i>
+            <span>Borrowals</span></a>
+        </li>
+
+        <!-- Nav Item - Returns -->
+        <li class="nav-item">
+          <a class="nav-link" href="returns.php">
+            <i class="fas fa-fw fa-file-invoice"></i>
+            <span>Returns</span></a>
+        </li>
+
+        <!-- Nav Item - Messages -->
+        <li class="nav-item">
+          <a class="nav-link" href="messages.php">
+            <i class="fas fa-fw fa-message"></i>
+            <span>Messages</span></a>
+        </li>
 
         <!-- Heading -->
         <div class="sidebar-heading">Minor</div>
@@ -256,7 +283,7 @@ if (isset($_SESSION["admin-auth"])) {
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['fullname']; ?></span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo (isset($_SESSION['fullname']) == true) ? $_SESSION['fullname'] : 'Admin'; ?></span>
                   <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -282,8 +309,8 @@ if (isset($_SESSION["admin-auth"])) {
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
               <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate
-                Report</a>
+              <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate
+                Report</a> -->
             </div>
 
             <!-- Content Row -->

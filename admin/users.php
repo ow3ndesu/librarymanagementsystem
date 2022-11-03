@@ -64,6 +64,30 @@ if (isset($_SESSION["admin-auth"])) {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
+        <div class="sidebar-heading">Major</div>
+
+        <!-- Nav Item - Borrowals -->
+        <li class="nav-item">
+          <a class="nav-link" href="borrowals.php">
+            <i class="fas fa-fw fa-book-bookmark"></i>
+            <span>Borrowals</span></a>
+        </li>
+
+        <!-- Nav Item - Returns -->
+        <li class="nav-item">
+          <a class="nav-link" href="returns.php">
+            <i class="fas fa-fw fa-file-invoice"></i>
+            <span>Returns</span></a>
+        </li>
+
+        <!-- Nav Item - Messages -->
+        <li class="nav-item">
+          <a class="nav-link" href="messages.php">
+            <i class="fas fa-fw fa-message"></i>
+            <span>Messages</span></a>
+        </li>
+
+        <!-- Heading -->
         <div class="sidebar-heading">Minor</div>
 
         <!-- Nav Item - Books -->

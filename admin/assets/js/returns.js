@@ -1,29 +1,29 @@
 $(document).ready(function () {
-    $("#borrowalstable").DataTable({
+    $("#returnstable").DataTable({
         pageLength: 5,
     });
     loadEverything();
 });
 
 function loadEverything() {
-    loadBorrowals();
+    loadReturns();
 }
 
-function loadBorrowals() {
+function loadReturns() {
     $.ajax({
-        url: "../routes/borrowals.route.php",
+        url: "../routes/returns.route.php",
         type: "POST",
         dataType: "JSON",
         data: {
-            action: "LoadBorrowals",
+            action: "LoadReturns",
         },
         beforeSend: function () {
-            console.log("loading borrowals...");
-            if ($.fn.DataTable.isDataTable("#borrowalstable")) {
-                $("#borrowalstable").DataTable().clear();
-                $("#borrowalstable").DataTable().destroy();
+            console.log("loading returns...");
+            if ($.fn.DataTable.isDataTable("#returnstable")) {
+                $("#returnstable").DataTable().clear();
+                $("#returnstable").DataTable().destroy();
             }
-            $("#borrowalsTableBody")
+            $("#returnsTableBody")
                 .empty()
                 .append(
                     "<tr><td colspan='6'>Loading! Please wait...</td></tr>"
@@ -31,18 +31,18 @@ function loadBorrowals() {
         },
         success: function (response) {
             console.log(response);
-            if (response.MESSAGE == "BORROWALS_LOADED") {
-                $("#borrowalsTableBody").empty();
+            if (response.MESSAGE == "RETURNS_LOADED") {
+                $("#returnsTableBody").empty();
                 let deleteBtn = "";
-                response.BORROWALS.forEach((element) => {
-                    element.status == "PENDING"
+                response.RETURNS.forEach((element) => {
+                    element.status == "RETURNED"
                         ? (deleteBtn =
-                              `<button type="button" class="btn btn-danger" onclick="deleteBorrowal(\'` +
+                              `<button type="button" class="btn btn-danger" onclick="deleteReturn(\'` +
                               element.borrow_id +
                               `'\)"><i class="fa-solid fa-trash"></i></button>`)
                         : null;
 
-                    $("#borrowalsTableBody").append(
+                    $("#returnsTableBody").append(
                         `
                         <tr>
                             <td>` +
@@ -61,7 +61,7 @@ function loadBorrowals() {
                             element.due +
                             `</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-primary me-2" onclick="viewBorrowal(\'` +
+                                <button type="button" class="btn btn-primary me-2" onclick="viewReturn(\'` +
                             element.borrow_id +
                             `\')"><i class="fa-solid fa-eye"></i></button>
                                 ` +
@@ -73,11 +73,11 @@ function loadBorrowals() {
                     );
                 });
 
-                $("#borrowalstable").DataTable({
+                $("#returnstable").DataTable({
                     pageLength: 5,
                 });
             } else {
-                $("#borrowalsTableBody")
+                $("#returnsTableBody")
                     .empty()
                     .append(
                         "<tr><td colspan='6'>Oops! No successful borrowals found.</td></tr>"
@@ -90,14 +90,15 @@ function loadBorrowals() {
     });
 }
 
-function EditBorrowalStatus(borrow_id, status) {
+function EditReturnStatus(borrow_id, status, reason) {
     $.ajax({
-        url: "../routes/borrowals.route.php",
+        url: "../routes/returns.route.php",
         type: "POST",
         data: {
-            action: "EditBorrowalStatus",
+            action: "EditReturnStatus",
             borrow_id: borrow_id,
             status: status,
+            reason: reason || "",
         },
         beforeSend: function () {
             console.log("editing status...");
@@ -111,16 +112,16 @@ function EditBorrowalStatus(borrow_id, status) {
     });
 }
 
-function DeleteBorrowal(borrow_id) {
+function DeleteReturn(borrow_id) {
     $.ajax({
-        url: "../routes/borrowals.route.php",
+        url: "../routes/returns.route.php",
         type: "POST",
         data: {
             action: "DeleteBorrowal",
-            book_id: book_id,
+            borrow_id: borrow_id,
         },
         beforeSend: function () {
-            console.log("deleting borrowal...");
+            console.log("deleting return...");
         },
         success: function (response) {
             return response;
@@ -132,21 +133,21 @@ function DeleteBorrowal(borrow_id) {
 }
 
 // TRIGERED FUNCTIONS
-function viewBorrowal(borrow_id) {
+function viewReturn(borrow_id) {
     $("#borrow_id").val(borrow_id);
     $.ajax({
-        url: "../routes/borrowals.route.php",
+        url: "../routes/returns.route.php",
         type: "POST",
         data: {
-            action: "LoadBorrowal",
+            action: "LoadReturn",
             borrow_id: borrow_id,
         },
         dataType: "JSON",
         beforeSend: function () {
-            console.log("fetching borrowal...");
+            console.log("fetching return...");
         },
         success: function (response) {
-            response.BORROWAL.forEach((element) => {
+            response.RETURN.forEach((element) => {
                 console.log(element);
                 $("#borrow_id").val(element[1]);
                 $("#filed").val(element[5]);
@@ -175,54 +176,63 @@ function viewBorrowal(borrow_id) {
                 $("#newstatus").val(element[15]);
                 $("#date").val(element[18]);
 
-                if (element[4] != "PENDING") {
-                    $("#disapproveBorrowalBtn").prop("disabled", true);
-                }
-
-                if (element[4] == "BORROWED") {
-                    $("#approveBorrowalBtn").prop("disabled", true);
+                if (element[4] == "RETURNED") {
+                    $("#disapproveReturnBtn").prop("disabled", true);
+                    $("#approveReturnBtn").prop("disabled", true);
                 }
             }),
-                $("#updateBorrowalModal").modal("show");
+                $("#updateReturnModal").modal("show");
 
-            $("#disapproveBorrowalBtn").click(function () {
-                Swal.fire({
-                    title: "Disapprove Borrowal?",
-                    icon: "question",
-                    showCancelButton: true,
-                    showLoaderOnConfirm: true,
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                    allowOutsideClick: false,
-                    customClass: {
-                        input: "text-center",
-                    },
-                    preConfirm: (e) => {
-                        return EditBorrowalStatus(borrow_id, "DISAPPROVED");
-                    },
-                }).then((result) => {
-                    if (result.isDismissed) {
-                        Swal.fire("Backin' out?", "Nothing Changes!", "info");
-                    } else {
-                        if (result.value != true) {
-                            Swal.fire("Eek!", "Something went wrong?", "error");
+            $("#disapproveReturnBtn").click(function () {
+                $("#updateReturnModal").modal("hide"),
+                    Swal.fire({
+                        title: "Disapprove Return?",
+                        icon: "question",
+                        text: "Please input a remarks.",
+                        input: "textarea",
+                        showCancelButton: true,
+                        confirmButtonText: "Proceed",
+                        inputPlaceholder: "Reason",
+                        showLoaderOnConfirm: true,
+                        customClass: {
+                            input: "text-center",
+                        },
+                        preConfirm: (reason) => {
+                            if (reason == "") {
+                                Swal.showValidationMessage(
+                                    `Please input reason`
+                                );
+                            } else {
+                                return EditReturnStatus(
+                                    borrow_id,
+                                    "BORROWED",
+                                    reason
+                                );
+                            }
+                        },
+                    }).then((result) => {
+                        if (result.isDismissed) {
+                            Swal.fire(
+                                "Backin' out?",
+                                "Nothing Changes!",
+                                "info"
+                            );
                         } else {
                             Swal.fire(
                                 "Hooray!",
                                 "Status Updated!",
                                 "success"
                             ).then(() => {
-                                $("#updateBorrowalModal").modal("hide"),
-                                    loadBorrowals();
+                                $("#updateReturnModal").modal("hide"),
+                                    loadReturns();
                             });
                         }
-                    }
-                });
+                    });
             });
 
-            $("#approveBorrowalBtn").click(function () {
+            $("#approveReturnBtn").click(function () {
                 Swal.fire({
-                    title: "Approve Borrowal?",
+                    title: "Approve Return?",
                     icon: "question",
                     showCancelButton: true,
                     showLoaderOnConfirm: true,
@@ -233,7 +243,7 @@ function viewBorrowal(borrow_id) {
                         input: "text-center",
                     },
                     preConfirm: (e) => {
-                        return EditBorrowalStatus(borrow_id, "BORROWED");
+                        return EditReturnStatus(borrow_id, "RETURNED", "");
                     },
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -247,8 +257,8 @@ function viewBorrowal(borrow_id) {
                                 "Status Updated!",
                                 "success"
                             ).then(() => {
-                                $("#updateBorrowalModal").modal("hide"),
-                                    loadBorrowals();
+                                $("#updateReturnModal").modal("hide"),
+                                    loadReturns();
                             });
                         }
                     }
@@ -261,9 +271,9 @@ function viewBorrowal(borrow_id) {
     });
 }
 
-function deleteBorrowal(borrow_id) {
+function deleteReturn(borrow_id) {
     Swal.fire({
-        title: "Delete Borrowal?",
+        title: "Delete Return?",
         icon: "question",
         showCancelButton: true,
         showLoaderOnConfirm: true,
@@ -274,7 +284,7 @@ function deleteBorrowal(borrow_id) {
             input: "text-center",
         },
         preConfirm: (e) => {
-            return DeleteBorrowal(borrow_id);
+            return DeleteReturn(borrow_id);
         },
     }).then((result) => {
         if (result.isDismissed) {
@@ -285,7 +295,7 @@ function deleteBorrowal(borrow_id) {
             } else {
                 Swal.fire("Hooray!", "Borrowal Deleted!", "success").then(
                     () => {
-                        loadBorrowals();
+                        loadReturns();
                     }
                 );
             }

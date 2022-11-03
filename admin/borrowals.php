@@ -15,7 +15,7 @@ if (isset($_SESSION["admin-auth"])) {
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>LMS Admin - Books</title>
+    <title>LMS Admin - Borrowals</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
