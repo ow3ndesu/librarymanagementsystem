@@ -28,7 +28,7 @@ if (isset($_SESSION["authenticated"])) {
         <link rel="stylesheet" href="../assets/css/owl.css">
         <link rel="stylesheet" href="../assets/css/animate.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-        <title>SFA - Home</title>
+        <title>LMS - Home</title>
     </head>
 
     <body>
@@ -53,7 +53,7 @@ if (isset($_SESSION["authenticated"])) {
                         <nav class="main-nav">
                             <!-- ***** Logo Start ***** -->
                             <a href="#" class="logo">
-                                <img src="../assets/img/logo-darker.svg" alt=""> | Service Finder App </img>
+                                <img src="../assets/img/logo-darker.svg" alt=""> | Library Management S. </img>
                             </a>
                             <!-- ***** Logo End ***** -->
                             <!-- ***** Search End ***** -->
@@ -67,9 +67,9 @@ if (isset($_SESSION["authenticated"])) {
                             <!-- ***** Menu Start ***** -->
                             <ul class="nav">
                                 <li><a href="#" class="active">Home</a></li>
-                                <li><a href="#">Browse</a></li>
+                                <li><a href="browse.page.php">Browse</a></li>
                                 <li><a href="#" id="logoutbtn">Logout</a></li>
-                                <li><a href="#">Profile <img src="../assets/images/profile-header.jpg" alt=""></a></li>
+                                <li><a href="profile.page.php">Profile <img src="../assets/images/profile-header.jpg" alt=""></a></li>
                             </ul>
                             <a class='menu-trigger'>
                                 <span>Menu</span>
@@ -92,10 +92,10 @@ if (isset($_SESSION["authenticated"])) {
                             <div class="row">
                                 <div class="col-lg-7">
                                     <div class="header-text">
-                                        <h6>Welcome To SFA</h6>
-                                        <h4><em>Browse</em> Our Popular Services Here</h4>
+                                        <h6>Welcome To LMS</h6>
+                                        <h4><em>Browse</em> Our Popular Books Here</h4>
                                         <div class="main-button">
-                                            <a href="#">Browse Now</a>
+                                            <a href="browse.page.php">Browse Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ if (isset($_SESSION["authenticated"])) {
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>Copyright © 2036 <a href="#">Service Provider App</a>. All rights reserved.</p>
+                        <p>Copyright © <a href="#">LMS - Library Management System 2022</a>. All rights reserved.</p>
                     </div>
                 </div>
             </div>
