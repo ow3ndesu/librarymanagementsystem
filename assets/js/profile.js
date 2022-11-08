@@ -2,6 +2,8 @@ $(document).ready(function () {
     loadEverything();
 });
 
+var student_id = null;
+
 function loadEverything() {
     loadStudentID();
     loadProfile();
@@ -42,6 +44,8 @@ function loadProfile() {
             console.log(response);
             if (response.MESSAGE == "PROFILE_LOADED") {
                 response.PROFILE.forEach((element) => {
+                    student_id = element.student_id;
+
                     if (element.firstname == "" || element.lastname == "") {
                         $("#profileIdentity").empty().text(element.student_id);
                     } else {
@@ -49,6 +53,9 @@ function loadProfile() {
                             .empty()
                             .text(element.firstname + " " + element.lastname);
                     }
+
+                    $("#borrowedcount").empty().text(element.borrowedcount);
+                    $("#returnedcount").empty().text(element.returnedcount);
 
                     if (element.is_completed == 0) {
                         $("#status").empty().text("Incomplete");
@@ -68,7 +75,11 @@ function loadProfile() {
                         $("#lastname").val(element.lastname);
                         $("#address").val(element.address);
                         $("#contact_no").val(element.contact_no);
+
+                        // loadBorrowedBooks(element.student_id);
                     } else {
+                        loadBorrowedBooks();
+
                         $("#status").empty().text("Completed");
                         $("#eligible").empty().text("Yes");
 
@@ -84,6 +95,86 @@ function loadProfile() {
                 });
             } else {
                 console.log("sus! how did u get in?");
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
+}
+
+function loadBorrowedBooks() {
+    $.ajax({
+        url: "../routes/borrowals.route.php",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            action: "LoadMyBorrowals",
+            student_id: student_id,
+        },
+        beforeSend: function () {
+            console.log("loading borrowals...");
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.MESSAGE == "BORROWALS_LOADED") {
+                $("#libraysection").empty();
+                response.BORROWALS.forEach((element) => {
+                    const actionbtn =
+                        element.status == "PENDING"
+                            ? '<a href="#" onclick="cancelBorrowal(\'' +
+                              element.borrow_id +
+                              "')\">Cancel</a>"
+                            : '<a href="#" onclick="returnBorrowal(\'' +
+                              element.borrow_id +
+                              "')\">Return</a>";
+                    $("#libraysection").append(
+                        `
+                        <div class="item">
+                            <ul>
+                            <li><img src="../assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
+                            <li>
+                                <h4>` +
+                            element.title +
+                            `</h4><span>Sandbox</span>
+                            </li>
+                            <li>
+                                <h4>Date Filed</h4><span>` +
+                            element.filed +
+                            `</span>
+                            </li>
+                            <li>
+                                <h4>Due Date</h4><span>` +
+                            element.due +
+                            `</span>
+                            </li>
+                            <li>
+                                <h4>Currently</h4><span>` +
+                            element.status +
+                            `</span>
+                            </li>
+                            <li>
+                                <div class="main-border-button border-no-active">` +
+                            actionbtn +
+                            `</div>
+                            </li>
+                            </ul>
+                        </div>
+                    `
+                    );
+                });
+            } else {
+                $("#libraysection")
+                    .empty()
+                    .append(
+                        `
+                    <div class="item">
+                        <ul class="text-center">
+                        <li>Nothing in here!</li>
+                        </ul>
+                    </div>
+                `
+                    );
             }
         },
         error: function (error) {
@@ -114,6 +205,28 @@ function updateProfile(
         },
         beforeSend: function () {
             console.log("updating profile...");
+        },
+        success: function (response) {
+            return response;
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function EditBorrowalStatus(borrow_id, status, student_id) {
+    $.ajax({
+        url: "../routes/borrowals.route.php",
+        type: "POST",
+        data: {
+            action: "EditMyBorrowalStatus",
+            borrow_id: borrow_id,
+            status: status,
+            student_id: student_id,
+        },
+        beforeSend: function () {
+            console.log("editing status...");
         },
         success: function (response) {
             return response;
@@ -203,4 +316,64 @@ function openCompleteProfileModal() {
                     });
                 }
             });
+}
+
+function cancelBorrowal(borrow_id) {
+    Swal.fire({
+        title: "Cancel Borrowal?",
+        icon: "question",
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        allowOutsideClick: false,
+        customClass: {
+            input: "text-center",
+        },
+        preConfirm: (e) => {
+            return EditBorrowalStatus(borrow_id, "CANCELED", student_id);
+        },
+    }).then((result) => {
+        if (result.isDismissed) {
+            Swal.fire("Backin' out?", "Nothing Changes!", "info");
+        } else {
+            if (result.value != true) {
+                Swal.fire("Eek!", "Something went wrong?", "error");
+            } else {
+                Swal.fire("Hooray!", "Status Updated!", "success").then(() => {
+                    loadBorrowedBooks();
+                });
+            }
+        }
+    });
+}
+
+function returnBorrowal(borrow_id) {
+    Swal.fire({
+        title: "Return This Book?",
+        icon: "question",
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        allowOutsideClick: false,
+        customClass: {
+            input: "text-center",
+        },
+        preConfirm: (e) => {
+            return EditBorrowalStatus(borrow_id, "RETURNING", student_id);
+        },
+    }).then((result) => {
+        if (result.isDismissed) {
+            Swal.fire("Backin' out?", "Nothing Changes!", "info");
+        } else {
+            if (result.value != true) {
+                Swal.fire("Eek!", "Something went wrong?", "error");
+            } else {
+                Swal.fire("Hooray!", "Status Updated!", "success").then(() => {
+                    loadBorrowedBooks();
+                });
+            }
+        }
+    });
 }

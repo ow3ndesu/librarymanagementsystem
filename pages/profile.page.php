@@ -109,8 +109,8 @@ if (isset($_SESSION["authenticated"])) {
                     </div>
                     <div class="col-lg-4 align-self-center">
                       <ul>
-                        <li>Books Borrowed <span id="borrowed">3</span></li>
-                        <li>Books Returned <span id="returned">16</span></li>
+                        <li>Books Borrowed <span id="borrowedcount">3</span></li>
+                        <li>Books Returned <span id="returnedcount">16</span></li>
                         <li>Profile Status <span id="status">Incomplete</span></li>
                         <li>Can Borrow <span id="eligible">No</span></li>
                       </ul>
@@ -202,65 +202,72 @@ if (isset($_SESSION["authenticated"])) {
                 <div class="heading-section">
                   <h4>Library</h4>
                 </div>
-                <div class="item">
-                  <ul>
-                    <li><img src="../assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
-                    <li>
-                      <h4>Dota 2</h4><span>Sandbox</span>
-                    </li>
-                    <li>
-                      <h4>Date Filed</h4><span>24/08/2036</span>
-                    </li>
-                    <li>
-                      <h4>Due Date</h4><span>05/29/2087</span>
-                    </li>
-                    <li>
-                      <h4>Currently</h4><span>Borrowed</span>
-                    </li>
-                    <li>
-                      <div class="main-border-button border-no-active"><a href="#">Return</a></div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="item">
-                  <ul>
-                    <li><img src="../assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-                    <li>
-                      <h4>Fortnite</h4><span>Sandbox</span>
-                    </li>
-                    <li>
-                      <h4>Date Filed</h4><span>22/06/2036</span>
-                    </li>
-                    <li>
-                      <h4>Due Date</h4><span>05/29/2087</span>
-                    </li>
-                    <li>
-                      <h4>Currently</h4><span>Borrowed</span>
-                    </li>
-                    <li>
-                      <div class="main-border-button border-no-active"><a href="#">Return</a></div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="item last-item">
-                  <ul>
-                    <li><img src="../assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
-                    <li>
-                      <h4>CS-GO</h4><span>Sandbox</span>
-                    </li>
-                    <li>
-                      <h4>Date Filed</h4><span>21/04/2022</span>
-                    </li>
-                    <li>
-                      <h4>Due Date</h4><span>05/29/2087</span>
-                    </li>
-                    <li>
-                      <h4>Currently</h4><span>Borrowed</span>
-                    </li>
-                    <li>
-                      <div class="main-border-button border-no-active"><a href="#">Return</a></div>
-                    </li>
-                  </ul>
+                <div id="libraysection">
+                  <div class="item">
+                    <ul class="text-center">
+                      <li>Nothing in here!</li>
+                    </ul>
+                  </div>
+                  <!-- <div class="item">
+                    <ul>
+                      <li><img src="../assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
+                      <li>
+                        <h4>Dota 2</h4><span>Sandbox</span>
+                      </li>
+                      <li>
+                        <h4>Date Filed</h4><span>24/08/2036</span>
+                      </li>
+                      <li>
+                        <h4>Due Date</h4><span>05/29/2087</span>
+                      </li>
+                      <li>
+                        <h4>Currently</h4><span>Borrowed</span>
+                      </li>
+                      <li>
+                        <div class="main-border-button border-no-active"><a href="#">Return</a></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="item">
+                    <ul>
+                      <li><img src="../assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
+                      <li>
+                        <h4>Fortnite</h4><span>Sandbox</span>
+                      </li>
+                      <li>
+                        <h4>Date Filed</h4><span>22/06/2036</span>
+                      </li>
+                      <li>
+                        <h4>Due Date</h4><span>05/29/2087</span>
+                      </li>
+                      <li>
+                        <h4>Currently</h4><span>Borrowed</span>
+                      </li>
+                      <li>
+                        <div class="main-border-button border-no-active"><a href="#">Return</a></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="item last-item">
+                    <ul>
+                      <li><img src="../assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
+                      <li>
+                        <h4>CS-GO</h4><span>Sandbox</span>
+                      </li>
+                      <li>
+                        <h4>Date Filed</h4><span>21/04/2022</span>
+                      </li>
+                      <li>
+                        <h4>Due Date</h4><span>05/29/2087</span>
+                      </li>
+                      <li>
+                        <h4>Currently</h4><span>Borrowed</span>
+                      </li>
+                      <li>
+                        <div class="main-border-button border-no-active"><a href="#">Return</a></div>
+                      </li>
+                    </ul>
+                  </div> -->
                 </div>
               </div>
             </div>

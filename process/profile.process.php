@@ -75,7 +75,7 @@ class Process extends Database
             $query = "SELECT admin_id, user_id, firstname, middlename, lastname, address, contact_no, is_completed FROM admins WHERE admin_id = ?;";
         } else {
             $id = $_SESSION['student_id'];
-            $query = "SELECT student_id, user_id, firstname, middlename, lastname, address, contact_no, is_completed FROM students WHERE student_id = ?;";
+            $query = "SELECT s.student_id, s.user_id, s.firstname, s.middlename, s.lastname, s.address, s.contact_no, s.is_completed, SUM(case when b.status = 'BORROWED' then 1 when b.status = 'RETURNING' then 1 when b.status = 'RETURNED' then 1 else 0 end) AS borrowedcount, SUM(case when b.status = 'RETURNED' then 1 else 0 end) AS returnedcount FROM students s INNER JOIN borrowals b ON b.student_id = s.student_id WHERE s.student_id = ?;";
         }
 
         $profileloaded = "PROFILE_LOADED";
