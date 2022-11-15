@@ -2,8 +2,31 @@ $(document).ready(function () {
     loadEverything();
 });
 
+var student_id = null;
+
 function loadEverything() {
+    loadStudentID();
     loadBooks();
+}
+
+function loadStudentID() {
+    $.ajax({
+        url: "../routes/auth.route.php",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            action: "LoadProfile",
+        },
+        beforeSend: function () {
+            console.log("loading ID...");
+        },
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
 }
 
 function loadBooks() {
@@ -24,10 +47,10 @@ function loadBooks() {
                 response.BOOKS.forEach((element) => {
                     $("#allbooks").append(
                         `
-                        <div class="col-lg-3 col-sm-6">
+                        <div class="col-lg-3 col-sm-6" role="button" onclick="borrowBook(\'`+ element.book_id +`\', \'` + element.title + `\')">
                             <div class="item">
                             <div class="thumb">
-                                <img src="../assets/images/stream-01.jpg" alt="">
+                                <img src="../assets/uploaded/images/`+ ((element.image != "") ? element.image : 'no-image.svg') +`" alt="" width="171px" height="171px">
                                 <div class="hover-effect">
                                 <div class="content">
                                     <div class="live">
@@ -160,29 +183,65 @@ function loadBorrowedBooks() {
     });
 }
 
-function EditBorrowalStatus(borrow_id, status, student_id) {
-    $.ajax({
-        url: "../routes/borrowals.route.php",
-        type: "POST",
-        data: {
-            action: "EditMyBorrowalStatus",
-            borrow_id: borrow_id,
-            status: status,
-            student_id: student_id,
+// TRIGGERED FUNCCTIONS
+function borrowBook(book_id, title) {
+    Swal.fire({
+        title: "Borrow "+ title +"?",
+        icon: "question",
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        allowOutsideClick: false,
+        customClass: {
+            input: "text-center",
         },
-        beforeSend: function () {
-            console.log("editing status...");
+        preConfirm: (e) => {
+            return $.ajax({
+                url: "../routes/borrowals.route.php",
+                type: "POST",
+                data: {
+                    action: "BorrowBook",
+                    book_id: book_id,
+                },
+                beforeSend: function () {
+                    console.log("borrowing book...");
+                },
+                success: function (response) {
+                    // return (response != 'BOOK_BORROWED') ? false : true;
+                    return response;
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+            }).then((result) => {
+                if (!result.isDismissed) {
+                    if (result.value != true) {
+                        Swal.fire("Eek!", "Something went wrong?", "error");
+                    } else {
+                        Swal.fire("Hooray!", "Your book will be delivered to you after approval!", "success").then(() => {
+                            loadBooks();
+                            loadBorrowedBooks();
+                        });
+                    }
+                }
+            });
         },
-        success: function (response) {
-            return response;
-        },
-        error: function (err) {
-            console.log(err);
-        },
+    }).then((result) => {
+        if (result.isDismissed) {
+            Swal.fire("Backin' out?", "Nothing Changes!", "info");
+        } else {
+            if (result.value != true) {
+                Swal.fire("Eek!", "Something went wrong?", "error");
+            } else {
+                Swal.fire("Hooray!", "Your book will be delivered to you after approval!", "success").then(() => {
+                    loadBooks();
+                    loadBorrowedBooks();
+                });
+            }
+        }
     });
 }
-
-// TRIGGERED FUNCCTIONS
 
 function cancelBorrowal(borrow_id) {
     Swal.fire({

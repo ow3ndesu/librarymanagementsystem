@@ -126,6 +126,32 @@ class Process extends Database
 
     // USER 
 
+    public function BorrowBook($data) {
+        $sanitize = new Sanitize();
+        $book_id = $sanitize->sanitizeForEmail($data["book_id"]);
+        $borrow_id = $sanitize->generateBWID();
+        $student_id = $_SESSION['student_id'];
+        $status = "PENDING";
+        $filed = date('m/d/Y');
+        $due = date('m/d/Y', strtotime($filed. ' + 10 days'));
+
+        $stmt = $this->conn->prepare("INSERT INTO borrowals (borrow_id, book_id, student_id, status, filed, due) VALUES (?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("ssssss", $borrow_id, $book_id, $student_id, $status, $filed, $due);
+        
+        if ($stmt->execute()) {
+            $stmt->close();
+
+            $stmt = $this->conn->prepare("UPDATE books SET quantity = quantity - 1 WHERE book_id = ?;");
+            $stmt->bind_param("s", $book_id);
+            $stmt->execute();
+            $stmt->close();
+
+            echo 'BOOK_BORROWED';
+        } else {
+            echo 'ERROR_BORROWING';
+        }
+    }
+
     public function LoadMyBorrowals($data)
     {
         $borrowals = [];

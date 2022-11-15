@@ -1,5 +1,6 @@
 <?php
-session_start();
+include_once("../database/connection.php");
+// session_start();
 
 if (isset($_SESSION["authenticated"])) {
 
@@ -91,13 +92,42 @@ if (isset($_SESSION["authenticated"])) {
 
             <!-- ***** Featured Books Start ***** -->
             <div class="row">
-              <div class="col-lg-8">
+              <div class="col-lg-12">
                 <div class="featured-games header-text">
                   <div class="heading-section">
                     <h4><em>Featured</em> Books</h4>
                   </div>
-                  <div class="owl-features owl-carousel">
-                    <div class="item">
+                  <div class="owl-features owl-carousel" id="featured">
+                    <?php
+                      $database = new Database();
+                      $stmt = $database->conn->prepare("SELECT * FROM books ORDER BY quantity DESC LIMIT 4");
+                      $stmt->execute();
+                      $result = $stmt->get_result();
+                      $stmt->close();
+
+                      while ($row = $result->fetch_assoc()) {
+                        $books[] = $row;
+                      }
+
+                      foreach ($books as $key => $value) {
+                        ?>
+                          <div class="item">
+                            <div class="thumb">
+                              <?php echo '<img src="../assets/uploaded/images/' . (($value['image'] != "") ? $value['image'] : 'no-image.svg') . '"  alt="">' ?>
+                              <div class="hover-effect">
+                                <h6><?php echo $value['description'] ?></h6>
+                              </div>
+                            </div>
+                            <h4><?php echo $value['title'] ?><br><span><?php echo $value['author'] ?></span></h4>
+                            <ul>
+                              <li class="text-danger"><i class="fa fa-book text-danger"></i> <?php echo $value['quantity'] ?></li>
+                              <li class="text-primary"><i class="fa fa-calendar"></i> <?php echo $value['inserted_at'] ?></li>
+                            </ul>
+                          </div>
+                        <?php
+                      }
+                    ?>
+                    <!-- <div class="item">
                       <div class="thumb">
                         <img src="../assets/images/featured-01.jpg" alt="">
                         <div class="hover-effect">
@@ -174,11 +204,11 @@ if (isset($_SESSION["authenticated"])) {
                         <li><i class="fa fa-star"></i> 4.8</li>
                         <li><i class="fa fa-download"></i> 2.3M</li>
                       </ul>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4">
+              <!-- <div class="col-lg-4">
                 <div class="top-downloaded">
                   <div class="heading-section">
                     <h4><em>Top</em> Borrowed</h4>
@@ -216,7 +246,7 @@ if (isset($_SESSION["authenticated"])) {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- ***** Featured Books End ***** -->
 

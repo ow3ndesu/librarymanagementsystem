@@ -22,6 +22,10 @@ if (isset($_POST["action"]) && $_POST["action"] == "DeleteBorrowal") {
 
 // USER
 
+if (isset($_POST["action"]) && $_POST["action"] == "BorrowBook") {
+    $process->BorrowBook($_POST);
+}
+
 if (isset($_POST["action"]) && $_POST["action"] == "LoadMyBorrowals") {
     $process->LoadMyBorrowals($_POST);
 }

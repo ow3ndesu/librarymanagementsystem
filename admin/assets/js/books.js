@@ -88,18 +88,24 @@ function loadBooks() {
     });
 }
 
-function addBook(title, author, description, quantity, status) {
+function addBook(image, title, author, description, quantity, status) {
+    console.log(image)
+    formData = new FormData();
+    formData.append('action', 'AddBook');
+    formData.append('image', image);
+    formData.append('title', title);
+    formData.append('author', author);
+    formData.append('description', description);
+    formData.append('quantity', quantity);
+    formData.append('status', status);
+
     $.ajax({
         url: "../routes/books.route.php",
         type: "POST",
-        data: {
-            action: "AddBook",
-            title: title,
-            author: author,
-            description: description,
-            quantity: quantity,
-            status: status,
-        },
+        contentType:false,
+        cache:false,
+        processData:false,
+        data: formData,
         beforeSend: function () {
             console.log("adding book...");
         },
@@ -161,6 +167,7 @@ function DeleteBook(book_id) {
 $("#addBookForm")
     .unbind("submit")
     .submit(function () {
+        const image = $("#image")[0].files;
         const title = $("#title").val();
         const author = $("#author").val();
         const description = $("#description").val();
@@ -179,7 +186,7 @@ $("#addBookForm")
                 input: "text-center",
             },
             preConfirm: (e) => {
-                return addBook(title, author, description, quantity, status);
+                return addBook(image[0], title, author, description, quantity, status);
             },
         }).then((result) => {
             if (result.isDismissed) {
@@ -212,6 +219,7 @@ function viewBook(book_id) {
         success: function (response) {
             response.BOOK.forEach((element) => {
                 console.log(element);
+                $("#book_image").empty().append(`<img src="../assets/uploaded/images/` + element.image + `" width="relative" height="100px" alt="` + element.image + `">`)
                 $("#newbook_id").val(element.book_id);
                 $("#newtitle").val(element.title);
                 $("#newauthor").val(element.author);

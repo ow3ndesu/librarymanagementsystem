@@ -36,4 +36,10 @@ class Sanitize extends Database
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         return 'STUD000' . substr(str_shuffle($str_result), 0, 6);
     }
+
+    public function generateBWID()
+    {
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        return 'BORROW000' . substr(str_shuffle($str_result), 0, 6);
+    }
 }

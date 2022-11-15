@@ -101,7 +101,7 @@ if (isset($_SESSION["authenticated"])) {
                       <div class="main-info header-text">
                         <span>Online</span>
                         <h4 id="profileIdentity">Loading...</h4>
-                        <p id="profileRemarks">You Haven't Completed Your Account yet. Go Complete It By Clicking The Buutton Below.</p>
+                        <p id="profileRemarks">You Haven't Completed Your Account yet. Go Complete It By Clicking The Button Below.</p>
                         <div class="main-border-button" id="profileActionButton">
                           <a href="#" onclick="openCompleteProfileModal()">Complete Profile</a>
                         </div>

@@ -10,7 +10,7 @@ class Process extends Database
     public function LoadBooks()
     {
         $books = [];
-        $sql = "SELECT * FROM books;";
+        (isset($_SESSION['admin_id'])) ? $sql = "SELECT * FROM books;" : $sql = "SELECT * FROM books WHERE quantity != '0';";
         $stmt = $this->conn->prepare($sql);
 
         if ($stmt->execute()) {
@@ -70,6 +70,7 @@ class Process extends Database
     {
         $sanitize = new Sanitize();
         $book_id = 'BOOK000' . $sanitize->generateBID();
+        $image = $_FILES["image"];
         $title = $sanitize->sanitizeForString($data["title"]);
         $author = $sanitize->sanitizeForString($data["author"]);
         $description = $sanitize->sanitizeForString($data["description"]);
@@ -78,15 +79,25 @@ class Process extends Database
         $inserted_by = $_SESSION["admin_id"];
         $inserted_at = date('m/d/Y');
 
-        $stmt = $this->conn->prepare("INSERT INTO books (book_id, title, author, description, quantity, status, inserted_by, inserted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-        $stmt->bind_param("ssssssss", $book_id, $title, $author, $description, $quantity, $status, $inserted_by, $inserted_at);
+        $path = '../assets/uploaded/images/';
+        $tmpname = $image["tmp_name"];
+        $filename = $image["name"];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = $book_id."-". $author .".".$ext;
 
-        if ($stmt->execute()) {
-            $stmt->close();
-            echo 'ADDING_SUCCESSFUL';
+        $stmt = $this->conn->prepare("INSERT INTO books (book_id, image, title, author, description, quantity, status, inserted_by, inserted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("sssssssss", $book_id, $filename, $title, $author, $description, $quantity, $status, $inserted_by, $inserted_at);
+        
+        if (move_uploaded_file($tmpname, $path.$filename)) {
+            if ($stmt->execute()) {
+                $stmt->close();
+                echo 'ADDING_SUCCESSFUL';
+            } else {
+                $stmt->close();
+                echo 'EXECUTION_ERROR';
+            }
         } else {
-            $stmt->close();
-            echo 'EXECUTION_ERROR';
+            echo 'UPLOAD_ERROR';
         }
     }
 
