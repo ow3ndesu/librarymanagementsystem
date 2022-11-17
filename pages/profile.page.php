@@ -195,8 +195,61 @@ if (isset($_SESSION["authenticated"])) {
               </div>
             </div>
             <!-- ***** Banner End ***** -->
-
-            <!-- ***** Gaming Library Start ***** -->
+            <div class="gaming-library profile-library">
+              <div class="col-lg-12">
+                <div class="heading-section">
+                  <h4>Message</h4>
+                </div>
+                <div id="messagesection">
+                  <div class="item">
+                    <ul>
+                      <li><img src="../assets/images/game-01.jpg" alt="" class="templatemo-item" style="border-radius: 50% !important;"></li>
+                      <li>
+                        <h4>Administrator</h4><span>Say Hi to Administrator!</span>
+                      </li>
+                      <li>
+                      </li>
+                      <li>
+                      </li>
+                      <li>
+                      </li>
+                      <li>
+                        <div class="main-border-button border-no-active"><a href="#" data-bs-toggle="modal" data-bs-target="#messagesModal">Message</a></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Modal Body -->
+            <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+            <div class="modal fade" id="messagesModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Have any concerns? Message Here.</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container message-box">
+                      <div class="row recieved">
+                        <div class="col">
+                          <span style=" display: flex; border: 1px solid rgb(219 226 239); border-radius: 10px; width: fit-content; padding: .2rem 1rem .2rem 1rem; flex-wrap: wrap; background-color: rgb(219 226 239);">Reach us out? Type down below.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <textarea name="message-input" id="message-input" cols="30" rows="1" class="form-control message-input"></textarea>
+                    <input type="hidden" name="reply_to" id="reply_to">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendMessageBtn" disabled>Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div class="gaming-library profile-library">
               <div class="col-lg-12">
                 <div class="heading-section">
@@ -271,7 +324,7 @@ if (isset($_SESSION["authenticated"])) {
                 </div>
               </div>
             </div>
-            <!-- ***** Gaming Library End ***** -->
+            
           </div>
         </div>
       </div>

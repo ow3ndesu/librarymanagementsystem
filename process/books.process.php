@@ -69,7 +69,7 @@ class Process extends Database
     public function AddBook($data)
     {
         $sanitize = new Sanitize();
-        $book_id = 'BOOK000' . $sanitize->generateBID();
+        $book_id = $sanitize->generateBID();
         $image = $_FILES["image"];
         $title = $sanitize->sanitizeForString($data["title"]);
         $author = $sanitize->sanitizeForString($data["author"]);

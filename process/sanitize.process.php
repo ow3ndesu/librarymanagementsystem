@@ -28,7 +28,7 @@ class Sanitize extends Database
     public function generateBID()
     {
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        return substr(str_shuffle($str_result), 0, 6);
+        return 'BOOK000' . substr(str_shuffle($str_result), 0, 6);
     }
 
     public function generateSID()
