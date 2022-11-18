@@ -8,6 +8,10 @@ if (isset($_POST["action"]) && $_POST["action"] == "LoadBorrowals") {
     $process->LoadBorrowals();
 }
 
+if (isset($_POST["action"]) && $_POST["action"] == "LoadBorrowed") {
+    $process->LoadBorrowed();
+}
+
 if (isset($_POST["action"]) && $_POST["action"] == "LoadBorrowal") {
     $process->LoadBorrowal($_POST);
 }

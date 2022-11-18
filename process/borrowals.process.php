@@ -39,6 +39,36 @@ class Process extends Database
         }
     }
 
+    public function LoadBorrowed()
+    {
+        $borrowals = [];
+        $sql = "SELECT b.borrow_id, bo.book_id, bo.title, s.student_id, s.lastname, b.status, b.filed, b.due FROM ((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) WHERE b.status = 'BORROWED' OR b.status = 'RETURNING' OR b.status = 'RETURNED' ORDER BY b.id DESC;";
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $stmt->close();
+
+                while ($row = $result->fetch_assoc()) {
+                    $borrowals[] = $row;
+                }
+
+                echo json_encode(array(
+                    "MESSAGE" => "BORROWALS_LOADED",
+                    "BORROWALS" => $borrowals
+                ));
+            } else {
+                echo json_encode(array(
+                    "MESSAGE" => "NO_BORROWALS",
+                ));
+            }
+        } else {
+            echo 'EXECUTION_ERROR';
+        }
+    }
+
     public function LoadBorrowal($data)
     {
         $borrowal = [];
