@@ -187,7 +187,7 @@ class Process extends Database
         $borrowals = [];
         $sanitize = new Sanitize();
         $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
-        $sql = "SELECT b.borrow_id, bo.book_id, bo.title, s.student_id, s.lastname, b.status, b.filed, b.due FROM ((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) WHERE b.status != 'RETURNING' AND b.status != 'RETURNED' AND b.status != 'CANCELED' AND b.student_id = ? ORDER BY b.id DESC;";
+        $sql = "SELECT b.borrow_id, bo.book_id, bo.image, bo.copy, bo.title, bo.author, s.student_id, s.lastname, b.status, b.filed, b.due FROM ((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) WHERE b.status != 'RETURNING' AND b.status != 'RETURNED' AND b.status != 'CANCELED' AND b.student_id = ? ORDER BY b.id DESC;";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $student_id);
 

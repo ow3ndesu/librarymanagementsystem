@@ -88,11 +88,12 @@ function loadBooks() {
     });
 }
 
-function addBook(image, title, author, description, quantity, status) {
-    console.log(image)
+function addBook(image, copy, title, author, description, quantity, status) {
+    console.log(copy)
     formData = new FormData();
     formData.append('action', 'AddBook');
     formData.append('image', image);
+    formData.append('copy', copy);
     formData.append('title', title);
     formData.append('author', author);
     formData.append('description', description);
@@ -168,6 +169,7 @@ $("#addBookForm")
     .unbind("submit")
     .submit(function () {
         const image = $("#image")[0].files;
+        const copy = $("#copy")[0].files;
         const title = $("#title").val();
         const author = $("#author").val();
         const description = $("#description").val();
@@ -186,7 +188,7 @@ $("#addBookForm")
                 input: "text-center",
             },
             preConfirm: (e) => {
-                return addBook(image[0], title, author, description, quantity, status);
+                return addBook(image[0], copy[0], title, author, description, quantity, status);
             },
         }).then((result) => {
             if (result.isDismissed) {
@@ -227,6 +229,9 @@ function viewBook(book_id) {
                 $("#newquantity").val(element.quantity);
                 $("#newstatus").val(element.status);
                 $("#date").val(element.inserted_at);
+                $('#viewSoftCopyViewer').empty().append(`
+                    <button type="button" class="btn btn-primary" onclick="viewSoftCopyBtn(\'`+ element.copy +`\', \'`+ element.title +`\')">View</button>
+                `)
 
                 if (element.status == "ENABLED") {
                     $("#enablebtn").prop("disabled", true);
@@ -299,6 +304,14 @@ function viewBook(book_id) {
             console.log(err);
         },
     });
+}
+
+function viewSoftCopyBtn(file, title) {
+    // window.open('../assets/uploaded/copies/'+ file +'', '_blank');
+    $("#updateBookModal").modal("hide");
+    $('#viewBookModal').modal('show');
+    $('#viewBookModal').find('#modalBookTitle').empty().text(title);
+    $('#viewBookModal').find('iframe').attr('src','../assets/uploaded/copies/'+ file +'');
 }
 
 function deleteBook(book_id) {

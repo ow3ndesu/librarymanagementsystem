@@ -180,11 +180,12 @@ function loadBorrowedBooks() {
                         `
                         <div class="item">
                             <ul>
-                            <li><img src="../assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
+                            <li><img src="../assets/uploaded/images/`+ element.image +`" alt="" class="templatemo-item"></li>
+                            
                             <li>
                                 <h4>` +
                             element.title +
-                            `</h4><span>Sandbox</span>
+                            `</h4><span>`+ element.author +`</span>
                             </li>
                             <li>
                                 <h4>Date Filed</h4><span>` +
@@ -203,8 +204,8 @@ function loadBorrowedBooks() {
                             </li>
                             <li>
                                 <div class="main-border-button border-no-active">` +
-                            actionbtn +
-                            `</div>
+                                    actionbtn +
+                                `</div>
                             </li>
                             </ul>
                         </div>

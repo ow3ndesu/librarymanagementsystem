@@ -262,6 +262,15 @@ if (isset($_SESSION["admin-auth"])) {
               </div>
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
+                  <label for="copy">Soft Copy</label>
+                  <label class="float-right">:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="file" class="form-control" id="copy" accept="application/pdf" required>
+                </div>
+              </div>
+              <div class="row my-2">
+                <div class="col-md-4 pt-1 pl-lg-4 pr-0">
                   <label for="book_id">Book ID.</label>
                   <label class="float-right">:</label>
                 </div>
@@ -345,6 +354,10 @@ if (isset($_SESSION["admin-auth"])) {
                 </div>
               </div>
               <div class="row my-2">
+                <div class="col-md-12 text-center" id="viewSoftCopyViewer">
+                </div>
+              </div>
+              <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
                   <label for="newbook_id">Book ID.</label>
                   <label class="float-right">:</label>
@@ -417,6 +430,25 @@ if (isset($_SESSION["admin-auth"])) {
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="viewBookModal" tabindex="-1" role="dialog" aria-labelledby="modalBookTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalBookTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <iframe frameborder="0" width="100%" height="480px"></iframe>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
       </div>
     </div>

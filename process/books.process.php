@@ -71,6 +71,7 @@ class Process extends Database
         $sanitize = new Sanitize();
         $book_id = $sanitize->generateBID();
         $image = $_FILES["image"];
+        $copy = $_FILES["copy"];
         $title = $sanitize->sanitizeForString($data["title"]);
         $author = $sanitize->sanitizeForString($data["author"]);
         $description = $sanitize->sanitizeForString($data["description"]);
@@ -84,17 +85,29 @@ class Process extends Database
         $filename = $image["name"];
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $filename = $book_id."-". $author .".".$ext;
-
-        $stmt = $this->conn->prepare("INSERT INTO books (book_id, image, title, author, description, quantity, status, inserted_by, inserted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-        $stmt->bind_param("sssssssss", $book_id, $filename, $title, $author, $description, $quantity, $status, $inserted_by, $inserted_at);
         
         if (move_uploaded_file($tmpname, $path.$filename)) {
-            if ($stmt->execute()) {
-                $stmt->close();
-                echo 'ADDING_SUCCESSFUL';
+
+            $filepath = '../assets/uploaded/copies/';
+            $copytmpname = $copy["tmp_name"];
+            $copyfilename = $copy["name"];
+            $copyext = pathinfo($copyfilename, PATHINFO_EXTENSION);
+            $copyfilename = $book_id."-". $author .".".$copyext;
+            
+            if (move_uploaded_file($copytmpname, $filepath.$copyfilename)) {
+
+                $stmt = $this->conn->prepare("INSERT INTO books (book_id, image, copy, title, author, description, quantity, status, inserted_by, inserted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                $stmt->bind_param("ssssssssss", $book_id, $filename, $copyfilename, $title, $author, $description, $quantity, $status, $inserted_by, $inserted_at);
+
+                if ($stmt->execute()) {
+                    $stmt->close();
+                    echo 'ADDING_SUCCESSFUL';
+                } else {
+                    $stmt->close();
+                    echo 'EXECUTION_ERROR';
+                }
             } else {
-                $stmt->close();
-                echo 'EXECUTION_ERROR';
+                echo 'UPLOAD_ERROR';
             }
         } else {
             echo 'UPLOAD_ERROR';
