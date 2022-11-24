@@ -180,7 +180,7 @@ function loadBorrowedBooks() {
                         `
                         <div class="item">
                             <ul>
-                            <li><img src="../assets/uploaded/images/`+ element.image +`" alt="" class="templatemo-item"></li>
+                            <li><img src="../assets/uploaded/images/`+ element.image +`" alt="" class="templatemo-item book-cover-`+ element.borrow_id +`"></li>
                             
                             <li>
                                 <h4>` +
@@ -211,6 +211,15 @@ function loadBorrowedBooks() {
                         </div>
                     `
                     );
+
+                    const due = parseInt(Date.parse(element.due));
+                    const now = parseInt(Date.now());
+
+                    console.log(due, now, (due >= now))
+
+                    if (due >= now) {
+                        $(".book-cover-" + element.borrow_id + "").css('cursor', 'pointer').attr('onclick', 'readBook(\'' + element.copy + '\', \'' + element.title + '\')').attr('title', 'Read Book');
+                    }
                 });
             } else {
                 $("#libraysection")
@@ -367,6 +376,12 @@ function openCompleteProfileModal() {
             });
 }
 
+function readBook(file, title) {
+    $('#readBookModal').modal('show');
+    $('#readBookModal').find('#modalBookTitle').empty().text(title);
+    $('#readBookModal').find('iframe').attr('src','../assets/uploaded/copies/'+ file +'');
+}
+
 function cancelBorrowal(borrow_id) {
     Swal.fire({
         title: "Cancel Borrowal?",
@@ -433,6 +448,10 @@ $(document).on('input', '#message-input', function () {
     } else {
         $("#sendMessageBtn").prop('disabled', false);
     }
+})
+
+$(".close-read-modal").click(function () {
+    $('#readBookModal').modal('hide');
 })
 
 $("#sendMessageBtn").click(function () {

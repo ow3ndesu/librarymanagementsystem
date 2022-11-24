@@ -249,6 +249,25 @@ if (isset($_SESSION["authenticated"])) {
                 </div>
               </div>
             </div>
+
+            <div class="modal fade" id="readBookModal" tabindex="-1" role="dialog" aria-labelledby="modalBookTitle" aria-hidden="true">
+              <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalBookTitle"></h5>
+                    <button type="button" class="close close-read-modal" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <iframe frameborder="0" width="100%" height="480px"></iframe>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary close-read-modal" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+              </div>
+            </div>
             
             <div class="gaming-library profile-library">
               <div class="col-lg-12">
