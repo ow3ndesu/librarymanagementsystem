@@ -57,7 +57,7 @@ class Process extends Database
                 $return[] = $rows;
             }
 
-            unset($return[0][30]);
+            unset($return[0][33]);
 
             echo json_encode(array(
                 "MESSAGE" => $returnloaded,

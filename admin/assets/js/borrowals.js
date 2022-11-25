@@ -154,26 +154,26 @@ function viewBorrowal(borrow_id) {
                 $("#status").val(element[4]);
                 $("#modify_by").val(element[7] != "" ? element[7] : "-");
                 $("#modify_at").val(element[8] != "" ? element[8] : "-");
-                $("#student_id").val(element[20]);
-                $("#user_id").val(element[21]);
+                $("#student_id").val(element[22]);
+                $("#user_id").val(element[23]);
                 $("#fullname").val(
-                    (element[22] != "" ? element[22] : "-") +
+                    (element[24] != "" ? element[24] : "-") +
                         " " +
-                        (element[23] != "" ? element[23] : "-") +
+                        (element[25] != "" ? element[25] : "-") +
                         " " +
-                        (element[24] != "" ? element[24] : "-")
+                        (element[26] != "" ? element[26] : "-")
                 );
-                $("#email").val(element[29]);
-                $("#address").val(element[25] != "" ? element[25] : "-");
-                $("#contact_no").val(element[26] != "" ? element[26] : "-");
-                $("#registration_date").val(element[33]);
+                $("#email").val(element[32]);
+                $("#address").val(element[27] != "" ? element[27] : "-");
+                $("#contact_no").val(element[28] != "" ? element[28] : "-");
+                $("#registration_date").val(element[30]);
                 $("#newbook_id").val(element[10]);
-                $("#newtitle").val(element[11]);
-                $("#newauthor").val(element[12]);
-                $("#newdescription").val(element[13]);
-                $("#newquantity").val(element[14]);
-                $("#newstatus").val(element[15]);
-                $("#date").val(element[18]);
+                $("#newtitle").val(element[13]);
+                $("#newauthor").val(element[14]);
+                $("#newdescription").val(element[15]);
+                $("#newquantity").val(element[16]);
+                $("#newstatus").val(element[17]);
+                $("#date").val(element[20]);
 
                 if (element[4] != "PENDING") {
                     $("#disapproveBorrowalBtn").prop("disabled", true);

@@ -31,6 +31,12 @@ if (isset($_SESSION["admin-auth"])) {
 
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+      .notification.card-body {
+        padding: 0.5rem;
+      }
+    </style>
   </head>
 
   <body id="page-top">
@@ -128,7 +134,7 @@ if (isset($_SESSION["admin-auth"])) {
             </button>
 
             <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
               <div class="input-group">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
@@ -137,7 +143,7 @@ if (isset($_SESSION["admin-auth"])) {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> -->
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -354,6 +360,35 @@ if (isset($_SESSION["admin-auth"])) {
               </div>
             </div>
 
+            <div class="d-sm-flex align-items-center justify-content-between mb-2">
+              <h3 class="h5 mb-0 text-gray-800">Notifications</h3>
+            </div>
+
+            <div id="notifications">
+              <!-- <div class="row">
+                <div class="col mb-4">
+                  <div class="card border-left-warning shadow h-100">
+                    <div class="notification card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-warning text-uppercase">
+                            Students
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-bell text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <audio id="audioNotification">
+              <source src="assets/audio/ding-36029.mp3" type="audio/mpeg">
+              <!-- Your browser does not support the audio element. -->
+            </audio>
+
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -387,13 +422,6 @@ if (isset($_SESSION["admin-auth"])) {
 
     <!-- Custom scripts for all pages-->
     <script src="assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="assets/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="assets/js/demo/chart-area-demo.js"></script>
-    <script src="assets/js/demo/chart-pie-demo.js"></script>
 
     <!-- All custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>

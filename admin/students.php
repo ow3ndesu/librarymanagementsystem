@@ -134,7 +134,7 @@ if (isset($_SESSION["admin-auth"])) {
             </form>
 
             <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
               <div class="input-group">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
@@ -143,7 +143,7 @@ if (isset($_SESSION["admin-auth"])) {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> -->
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -347,7 +347,7 @@ if (isset($_SESSION["admin-auth"])) {
               <thead>
                 <tr>
                   <th>User ID</th>
-                  <th>Email</th>
+                  <th>Username</th>
                   <th class="text-center">Action</th>
                 </tr>
               </thead>
@@ -357,7 +357,7 @@ if (isset($_SESSION["admin-auth"])) {
               <tfoot>
                 <tr>
                   <th>User ID</th>
-                  <th>Email</th>
+                  <th>Username</th>
                   <th class="text-center">Action</th>
                 </tr>
               </tfoot>
@@ -384,7 +384,7 @@ if (isset($_SESSION["admin-auth"])) {
             <div class="modal-body">
               <div class="row my-2">
                 <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                  <label for="newstudent_id">Book ID.</label>
+                  <label for="newstudent_id">Student ID.</label>
                   <label class="float-right">:</label>
                 </div>
                 <div class="col-md-8">

@@ -134,7 +134,7 @@ if (isset($_SESSION["admin-auth"])) {
             </form>
 
             <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
               <div class="input-group">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
@@ -143,7 +143,7 @@ if (isset($_SESSION["admin-auth"])) {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> -->
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -434,7 +434,7 @@ if (isset($_SESSION["admin-auth"])) {
                 </div>
                 <div class="row my-2">
                   <div class="col-md-4 pt-1 pl-lg-4 pr-0">
-                    <label for="email">Email</label>
+                    <label for="email">Username</label>
                     <label class="float-right">:</label>
                   </div>
                   <div class="col-md-8">
@@ -543,7 +543,7 @@ if (isset($_SESSION["admin-auth"])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary btn-block my-auto" id="approveReturnBtn">Approve Return</button>
-            <button type="button" class="btn btn-secondary btn-block" id="disapproveReturnBtn">Disapprove Return</button>
+            <!-- <button type="button" class="btn btn-secondary btn-block" id="disapproveReturnBtn">Disapprove Return</button> -->
           </div>
         </div>
       </div>

@@ -31,8 +31,8 @@
                         <h2 class="form-title">Sign up</h2>
                         <form class="register-form" id="register-form">
                             <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" id="email" placeholder="Your Email" minlength="6" />
+                                <label for="email"><i class="zmdi zmdi-account"></i></label>
+                                <input type="text" id="email" placeholder="Username" minlength="4" />
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
@@ -65,7 +65,6 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="assets/img/signin-image.jpg" alt="sign up image"></figure>
-                        <a href="#" class="signup-image-link signup-link">Create an account</a>
                     </div>
 
                     <div class="signin-form">
@@ -73,7 +72,7 @@
                         <form class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="email" id="logemail" placeholder="Email" minlength="6" />
+                                <input type="text" id="logemail" placeholder="Username" minlength="4" />
                             </div>
                             <div class="form-group">
                                 <label for="password"><i class="zmdi zmdi-lock"></i></label>
@@ -86,15 +85,8 @@
                             <div class="form-group form-button submit-btn" role="status">
                                 <input type="button" id="signinbtn" class="form-submit" value="Log in" />
                             </div>
+                            <a href="#" class="signup-image-link signup-link">Create an account</a>
                         </form>
-                        <div class="social-login">
-                            <span class="social-label">Or login with</span>
-                            <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>

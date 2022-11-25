@@ -489,3 +489,7 @@ $("#sendMessageBtn").click(function () {
     }
 
 })
+
+$("input[type=text]").on('input', function () {
+    this.value = this.value.toUpperCase();
+});

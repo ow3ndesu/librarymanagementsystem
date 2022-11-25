@@ -89,7 +89,7 @@ class Process extends Database
                 $borrowal[] = $rows;
             }
 
-            unset($borrowal[0][30]);
+            unset($borrowal[0][33]);
 
             echo json_encode(array(
                 "MESSAGE" => $borrowalloaded,

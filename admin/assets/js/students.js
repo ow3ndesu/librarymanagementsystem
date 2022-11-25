@@ -66,7 +66,7 @@ function loadStudents() {
                                 <button type="button" class="btn btn-primary me-2" onclick="viewStudent(\'` +
                             element.student_id +
                             `\')"><i class="fa-solid fa-eye"></i></button>
-                                <button type="button" class="btn btn-danger" onclick="deleteBook(\'` +
+                                <button type="button" class="btn btn-danger" onclick="deleteStudent(\'` +
                             element.student_id +
                             `'\)"><i class="fa-solid fa-trash"></i></button>
                             </td>
@@ -204,16 +204,16 @@ function UpdateStudent(
     });
 }
 
-function DeleteBook(student_id) {
+function DeleteStudent(student_id) {
     $.ajax({
-        url: "../routes/books.route.php",
+        url: "../routes/students.route.php",
         type: "POST",
         data: {
-            action: "DeleteBook",
+            action: "DeleteStudent",
             student_id: student_id,
         },
         beforeSend: function () {
-            console.log("deleting book...");
+            console.log("deleting Student...");
         },
         success: function (response) {
             return response;
@@ -414,7 +414,7 @@ function viewStudent(student_id) {
     });
 }
 
-function deleteBook(student_id) {
+function deleteStudent(student_id) {
     Swal.fire({
         title: "Delete Book?",
         icon: "question",
@@ -427,7 +427,7 @@ function deleteBook(student_id) {
             input: "text-center",
         },
         preConfirm: (e) => {
-            return DeleteBook(student_id);
+            return DeleteStudent(student_id);
         },
     }).then((result) => {
         if (result.isDismissed) {
@@ -436,7 +436,7 @@ function deleteBook(student_id) {
             if (result.value != true) {
                 Swal.fire("Eek!", "Something went wrong?", "error");
             } else {
-                Swal.fire("Hooray!", "Book Deleted!", "success").then(() => {
+                Swal.fire("Hooray!", "Student Deleted!", "success").then(() => {
                     loadStudents();
                 });
             }

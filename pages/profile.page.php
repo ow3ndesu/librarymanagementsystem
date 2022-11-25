@@ -146,7 +146,7 @@ if (isset($_SESSION["authenticated"])) {
                           <label class="float-right">:</label>
                         </div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" id="firstname" minlength="2" required>
+                          <input type="text" class="form-control uppercase" id="firstname" minlength="2" required>
                         </div>
                       </div>
                       <div class="row my-2">
@@ -155,7 +155,7 @@ if (isset($_SESSION["authenticated"])) {
                           <label class="float-right">:</label>
                         </div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" id="middlename" minlength="4" required>
+                          <input type="text" class="form-control uppercase" id="middlename">
                         </div>
                       </div>
                       <div class="row my-2">
@@ -164,7 +164,7 @@ if (isset($_SESSION["authenticated"])) {
                           <label class="float-right">:</label>
                         </div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" id="lastname" minlength="4" required>
+                          <input type="text" class="form-control uppercase" id="lastname" minlength="4" required>
                         </div>
                       </div>
                       <div class="row my-2">
@@ -173,7 +173,7 @@ if (isset($_SESSION["authenticated"])) {
                           <label class="float-right">:</label>
                         </div>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" id="address" minlength="4" required>
+                          <input type="text" class="form-control uppercase" id="address" minlength="4" required>
                         </div>
                       </div>
                       <div class="row my-2">

@@ -24,7 +24,7 @@ function loadInbox() {
                     <div class="item border mb-2 p-2 d-flex justify-content-between align-items-center" style=" border-radius: 20px; margin: auto;" role="button" onclick="openMessage(\'`+ element.student_id +`\')">
                         <img src="../assets/images/smsicon.jpg" alt="avatar" class="avatar" style="border-radius: 50%; width="50px" height="50px">
                         <div>
-                            <div><b>`+ (element.firstname + ' ' + element.middlename + ' ' + element.lastname) +`</b></div>
+                            <div><b>`+ capitalizeFirstLetter((element.firstname) + ' ' + capitalizeFirstLetter(element.middlename) + ' ' + capitalizeFirstLetter(element.lastname)) +`</b></div>
                             <div>`+ element.message +`</div>
                         </div>
                         <div>`+ element.created_at +`</div>
@@ -147,3 +147,6 @@ $("#sendMessageBtn").click(function () {
     }
 
 })
+
+const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  first === undefined ? '' : first.toLocaleUpperCase(locale) + rest.join('');
