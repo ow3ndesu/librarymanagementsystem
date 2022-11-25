@@ -117,6 +117,14 @@ function loadNotifications() {
                 }).then(() => {
                     audio.play();
                 })
+            } else {
+                $('#notifications').append(`
+                    <div class="row">
+                        <div class="col mb-2 text-center">
+                            No Notifications.
+                        </div>
+                    </div>
+                `);
             }
             
         },
