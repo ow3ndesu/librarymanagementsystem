@@ -140,6 +140,7 @@ function viewUser(user_id) {
         success: function (response) {
             response.USER.forEach((element) => {
                 console.log(element);
+                $("#proof").empty().append(`<img src="../assets/uploaded/proofs/` + element.proof + `" width="relative" height="200px" alt="` + element.proof + `">`)
                 $("#email").val(element.email);
                 $("#user_type").val(element.user_type);
                 $("#status").val(element.status);

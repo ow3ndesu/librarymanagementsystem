@@ -43,6 +43,11 @@
                                 <input type="password" id="re_pass" placeholder="Repeat your password" minlength="8" />
                             </div>
                             <div class="form-group">
+                                <label for="image_proof"><i class="zmdi zmdi-image-o"></i></label>
+                                <input type="file" id="image_proof" accept="image/*"/>
+                            </div>
+                            <small><b>Please include a photo of your School ID. Thank you.</b></small>
+                            <div class="form-group">
                                 <input type="checkbox" id="agree-term" class="agree-term" />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
                             </div>

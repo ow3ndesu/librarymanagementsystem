@@ -343,6 +343,10 @@ if (isset($_SESSION["admin-auth"])) {
           </div>
           <div class="modal-body">
             <div class="row my-2">
+                <div class="col-md-12 text-center" id="proof">
+                </div>
+              </div>
+            <div class="row my-2">
               <div class="col-md-4 pt-1 pl-lg-4 pr-0">
                 <label for="user_id">User ID.</label>
                 <label class="float-right">:</label>

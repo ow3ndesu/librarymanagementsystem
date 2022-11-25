@@ -111,8 +111,9 @@ $("#signupbtn").click(function () {
   const email = $("#email").val();
   const password = $("#pass").val();
   const re_password = $("#re_pass").val();
-
-  if (email === "" || password === "" || re_password === "") {
+  const proof = $("#image_proof")[0].files;
+  console.log(proof)
+  if (email === "" || password === "" || re_password === "" || proof.length === 0) {
     Swal.fire("Where you goin?", "Please fill all fields!", "error");
   } else if (password !== re_password) {
     Swal.fire(
@@ -131,6 +132,7 @@ $("#signupbtn").click(function () {
     formdata.append("action", "Register");
     formdata.append("email", email);
     formdata.append("password", password);
+    formdata.append("proof", proof[0]);
 
     $.ajax({
       url: "routes/auth.route.php",

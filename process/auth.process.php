@@ -13,6 +13,7 @@ class Process extends Database
         $email = $sanitize->sanitizeForEmail($data["email"]);
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
+        $proof = $_FILES["proof"];
         $type = "Student"; // Student, Librarian/Admin
         $status = "DISABLED"; // DISABLED/ENABLED
         $createdat = date('m/d/Y');
@@ -21,26 +22,37 @@ class Process extends Database
         $emailinuse = "EMAIL_ALREADY_IN_USE";
         $registered = "REGISTER_SUCCESS";
 
-        $query = "SELECT * FROM users where email = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $path = '../assets/uploaded/proofs/';
+        $tmpname = $proof["tmp_name"];
+        $filename = $proof["name"];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = $email."-". rand(90, 2000) .".".$ext;
 
-        $stmt->close();
+        if (move_uploaded_file($tmpname, $path.$filename)) {
 
-        if ($result->num_rows == 1) {
-            echo $emailinuse;
-        } else {
-            $stmt = $this->conn->prepare("INSERT INTO users(email, password, user_type, status, created_at) VALUES (?,?,?,?,?);");
-            $stmt->bind_param("sssss", $email, $passwordmd5, $type, $status, $created_at);
+            $query = "SELECT * FROM users where email = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            if ($stmt->execute()) {
-                $stmt->close();
-                echo $registered;
+            $stmt->close();
+
+            if ($result->num_rows == 1) {
+                echo $emailinuse;
             } else {
-                echo "THIS IS A DB OR CONNECTION ERROR";
+                $stmt = $this->conn->prepare("INSERT INTO users(email, password, proof, user_type, status, created_at) VALUES (?,?,?,?,?,?);");
+                $stmt->bind_param("ssssss", $email, $passwordmd5, $filename, $type, $status, $created_at);
+
+                if ($stmt->execute()) {
+                    $stmt->close();
+                    echo $registered;
+                } else {
+                    echo "THIS IS A DB OR CONNECTION ERROR";
+                }
             }
+        } else {
+            echo 'UPLOAD_ERROR';
         }
     }
 

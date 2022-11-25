@@ -75,7 +75,7 @@ class Process extends Database
         $userloaded = "USER_LOADED";
         $nodata = "NO_DATA";
 
-        $stmt = $this->conn->prepare("SELECT user_id, email, user_type, status, created_at FROM users WHERE user_id = ?;");
+        $stmt = $this->conn->prepare("SELECT user_id, email, proof, user_type, status, created_at FROM users WHERE user_id = ?;");
         $stmt->bind_param("s", $user_id);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -142,12 +142,22 @@ class Process extends Database
         $sanitize = new Sanitize();
         $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
 
-        $stmt = $this->conn->prepare("DELETE FROM users WHERE user_id = ?;");
+        $stmt = $this->conn->prepare("DELETE FROM students WHERE user_id = ?;");
         $stmt->bind_param("s", $user_id);
 
         if ($stmt->execute()) {
             $stmt->close();
-            echo 'DELETE_SUCCESSFUL';
+            
+            $stmt = $this->conn->prepare("DELETE FROM users WHERE user_id = ?;");
+            $stmt->bind_param("s", $user_id);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                echo 'DELETE_SUCCESSFUL';
+            } else {
+                $stmt->close();
+                echo 'DELETE_ERROR';
+            }
         } else {
             $stmt->close();
             echo 'DELETE_ERROR';
