@@ -3,9 +3,11 @@ $(document).ready(function () {
 });
 
 var student_id = null;
+var is_completed = 0;
 
 function loadEverything() {
     loadStudentID();
+    loadProfile();
     loadBooks();
 }
 
@@ -29,6 +31,33 @@ function loadStudentID() {
     });
 }
 
+function loadProfile() {
+    $.ajax({
+        url: "../routes/profile.route.php",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            action: "LoadProfile",
+        },
+        beforeSend: function () {
+            console.log("loading profile...");
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.MESSAGE == "PROFILE_LOADED") {
+                response.PROFILE.forEach((element) => {
+                    is_completed = element.is_completed;
+                });
+            } else {
+                console.log("sus! how did u get in?");
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
+}
+
 function loadBooks() {
     $.ajax({
         url: "../routes/books.route.php",
@@ -45,9 +74,10 @@ function loadBooks() {
             if (response.MESSAGE == "BOOKS_LOADED") {
                 $("#allbooks").empty();
                 response.BOOKS.forEach((element) => {
+                    const divhead = (is_completed != 0) ? `<div class="col-lg-3 col-sm-6" role="button" onclick="borrowBook(\'`+ element.book_id +`\', \'` + element.title + `\')">` : `<div class="col-lg-3 col-sm-6">`;;
                     $("#allbooks").append(
-                        `
-                        <div class="col-lg-3 col-sm-6" role="button" onclick="borrowBook(\'`+ element.book_id +`\', \'` + element.title + `\')">
+                        ``+ divhead +`
+                        
                             <div class="item">
                             <div class="thumb">
                                 <img src="../assets/uploaded/images/`+ ((element.image != "") ? element.image : 'no-image.svg') +`" alt="" width="171px" height="171px">
