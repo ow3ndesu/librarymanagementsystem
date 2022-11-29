@@ -28,31 +28,30 @@ class Process extends Database
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $filename = $email."-". rand(90, 2000) .".".$ext;
 
-        if (move_uploaded_file($tmpname, $path.$filename)) {
+        $query = "SELECT * FROM users where email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            $query = "SELECT * FROM users where email = ?";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
+        $stmt->close();
 
-            $stmt->close();
-
-            if ($result->num_rows == 1) {
-                echo $emailinuse;
-            } else {
+        if ($result->num_rows == 1) {
+            echo $emailinuse;
+        } else {
+            if (move_uploaded_file($tmpname, $path.$filename)) {
                 $stmt = $this->conn->prepare("INSERT INTO users(email, password, proof, user_type, status, created_at) VALUES (?,?,?,?,?,?);");
                 $stmt->bind_param("ssssss", $email, $passwordmd5, $filename, $type, $status, $created_at);
-
+    
                 if ($stmt->execute()) {
                     $stmt->close();
                     echo $registered;
                 } else {
                     echo "THIS IS A DB OR CONNECTION ERROR";
                 }
+            } else {
+                echo 'UPLOAD_ERROR';
             }
-        } else {
-            echo 'UPLOAD_ERROR';
         }
     }
 
