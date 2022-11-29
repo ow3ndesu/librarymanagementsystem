@@ -41,7 +41,7 @@ function loadBorrowals() {
         success: function (response) {
             console.log(response);
             if (response.MESSAGE == "BORROWALS_LOADED") {
-                //REQUESTS
+                // REQUESTS
                 $("#borrowalRequestsTableBody").empty();
                 let deleteBtn = "";
                 response.REQUESTS.forEach((element) => {
@@ -124,10 +124,10 @@ function loadBorrowals() {
                     );
                 });
 
-                $("#borrowalstable").DataTable({
+                $("#borrowalrequeststable").DataTable({
                     pageLength: 5,
                 });
-                $("#requetstable").DataTable({
+                $("#borrowalstable").DataTable({
                     pageLength: 5,
                 });
             } else {
