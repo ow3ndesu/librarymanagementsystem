@@ -9,6 +9,7 @@ class Process extends Database
 {
     public function LoadReturns()
     {
+        $requests = [];
         $returns = [];
         $sql = "SELECT b.borrow_id, bo.book_id, bo.title, s.student_id, s.lastname, b.status, b.filed, b.due, r.remarks, r.returned_at FROM (((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) LEFT JOIN returns r ON b.book_id = r.id) WHERE b.status = 'RETURNING' OR b.status = 'RETURNED' ORDER BY b.id DESC;";
         $stmt = $this->conn->prepare($sql);
@@ -20,11 +21,16 @@ class Process extends Database
                 $stmt->close();
 
                 while ($row = $result->fetch_assoc()) {
-                    $returns[] = $row;
+                    if ($row['status'] == 'RETURNED') {
+                        $returns[] = $row;
+                    } else {
+                        $requests[] = $row;
+                    }
                 }
 
                 echo json_encode(array(
                     "MESSAGE" => "RETURNS_LOADED",
+                    "REQUESTS" => $requests,
                     "RETURNS" => $returns
                 ));
             } else {

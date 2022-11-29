@@ -19,10 +19,19 @@ function loadReturns() {
         },
         beforeSend: function () {
             console.log("loading returns...");
+            if ($.fn.DataTable.isDataTable("#returnrequeststable")) {
+                $("#returnrequeststable").DataTable().clear();
+                $("#returnrequeststable").DataTable().destroy();
+            }
             if ($.fn.DataTable.isDataTable("#returnstable")) {
                 $("#returnstable").DataTable().clear();
                 $("#returnstable").DataTable().destroy();
             }
+            $("#returnRequestsTableBody")
+                .empty()
+                .append(
+                    "<tr><td colspan='6'>Loading! Please wait...</td></tr>"
+                );
             $("#returnsTableBody")
                 .empty()
                 .append(
@@ -32,8 +41,51 @@ function loadReturns() {
         success: function (response) {
             console.log(response);
             if (response.MESSAGE == "RETURNS_LOADED") {
-                $("#returnsTableBody").empty();
+
+                // REQUESTS
+                $("#returnRequestsTableBody").empty();
                 let deleteBtn = "";
+                response.REQUESTS.forEach((element) => {
+                    element.status == "RETURNED"
+                        ? (deleteBtn =
+                              `<button type="button" class="btn btn-danger" onclick="deleteReturn(\'` +
+                              element.borrow_id +
+                              `'\)"><i class="fa-solid fa-trash"></i></button>`)
+                        : null;
+
+                    $("#returnRequestsTableBody").append(
+                        `
+                        <tr>
+                            <td>` +
+                            element.borrow_id +
+                            `</td>
+                            <td>` +
+                            element.title +
+                            `</th>
+                            <td>` +
+                            (element.lastname != "" ? element.lastname : "-") +
+                            `</td>
+                            <td>` +
+                            element.filed +
+                            `</td>
+                            <td>` +
+                            element.due +
+                            `</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary me-2" onclick="viewReturn(\'` +
+                            element.borrow_id +
+                            `\')"><i class="fa-solid fa-eye"></i></button>
+                                ` +
+                            deleteBtn +
+                            `
+                            </td>
+                        </tr>
+                      `
+                    );
+                });
+
+                // RETURNS
+                $("#returnsTableBody").empty();
                 response.RETURNS.forEach((element) => {
                     element.status == "RETURNED"
                         ? (deleteBtn =
@@ -73,10 +125,18 @@ function loadReturns() {
                     );
                 });
 
+                $("#returnrequeststable").DataTable({
+                    pageLength: 5,
+                });
                 $("#returnstable").DataTable({
                     pageLength: 5,
                 });
             } else {
+                $("#returnRequestsTableBody")
+                    .empty()
+                    .append(
+                        "<tr><td colspan='6'>Oops! No successful borrowals found.</td></tr>"
+                    );
                 $("#returnsTableBody")
                     .empty()
                     .append(
