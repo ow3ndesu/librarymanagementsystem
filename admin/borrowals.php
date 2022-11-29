@@ -273,6 +273,44 @@ if (isset($_SESSION["admin-auth"])) {
             <div class="card shadow mb-4">
               <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
+                  Requests
+                </h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered text-center" id="borrowalrequeststable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="borrowalRequestsTableBody">
+
+                    </tbody>
+                    <!-- <tfoot>
+                      <tr>
+                        <th>Borrow ID</th>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Filed</th>
+                        <th>Due</th>
+                        <th>Action</th>
+                      </tr>
+                    </tfoot> -->
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex">
+                <h6 class="m-0 font-weight-bold text-primary">
                   Successful Borrowals
                 </h6>
               </div>
@@ -292,7 +330,7 @@ if (isset($_SESSION["admin-auth"])) {
                     <tbody id="borrowalsTableBody">
 
                     </tbody>
-                    <tfoot>
+                    <!-- <tfoot>
                       <tr>
                         <th>Borrow ID</th>
                         <th>Book</th>
@@ -301,7 +339,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Due</th>
                         <th>Action</th>
                       </tr>
-                    </tfoot>
+                    </tfoot> -->
                     <tbody></tbody>
                   </table>
                 </div>

@@ -19,10 +19,19 @@ function loadBorrowals() {
         },
         beforeSend: function () {
             console.log("loading borrowals...");
+            if ($.fn.DataTable.isDataTable("#borrowalrequeststable")) {
+                $("#borrowalrequeststable").DataTable().clear();
+                $("#borrowalrequeststable").DataTable().destroy();
+            }
             if ($.fn.DataTable.isDataTable("#borrowalstable")) {
                 $("#borrowalstable").DataTable().clear();
                 $("#borrowalstable").DataTable().destroy();
             }
+            $("#borrowalRequestsTableBody")
+                .empty()
+                .append(
+                    "<tr><td colspan='6'>Loading! Please wait...</td></tr>"
+                );
             $("#borrowalsTableBody")
                 .empty()
                 .append(
@@ -32,8 +41,50 @@ function loadBorrowals() {
         success: function (response) {
             console.log(response);
             if (response.MESSAGE == "BORROWALS_LOADED") {
-                $("#borrowalsTableBody").empty();
+                //REQUESTS
+                $("#borrowalRequestsTableBody").empty();
                 let deleteBtn = "";
+                response.REQUESTS.forEach((element) => {
+                    element.status == "PENDING"
+                        ? (deleteBtn =
+                              `<button type="button" class="btn btn-danger" onclick="deleteBorrowal(\'` +
+                              element.borrow_id +
+                              `'\)"><i class="fa-solid fa-trash"></i></button>`)
+                        : null;
+
+                    $("#borrowalRequestsTableBody").append(
+                        `
+                        <tr>
+                            <td>` +
+                            element.borrow_id +
+                            `</td>
+                            <td>` +
+                            element.title +
+                            `</th>
+                            <td>` +
+                            (element.lastname != "" ? element.lastname : "-") +
+                            `</td>
+                            <td>` +
+                            element.filed +
+                            `</td>
+                            <td>` +
+                            element.due +
+                            `</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary me-2" onclick="viewBorrowal(\'` +
+                            element.borrow_id +
+                            `\')"><i class="fa-solid fa-eye"></i></button>
+                                ` +
+                            deleteBtn +
+                            `
+                            </td>
+                        </tr>
+                      `
+                    );
+                });
+
+                // BORROWALS
+                $("#borrowalsTableBody").empty();
                 response.BORROWALS.forEach((element) => {
                     element.status == "PENDING"
                         ? (deleteBtn =
@@ -76,8 +127,16 @@ function loadBorrowals() {
                 $("#borrowalstable").DataTable({
                     pageLength: 5,
                 });
+                $("#requetstable").DataTable({
+                    pageLength: 5,
+                });
             } else {
                 $("#borrowalsTableBody")
+                    .empty()
+                    .append(
+                        "<tr><td colspan='6'>Oops! No successful borrowals found.</td></tr>"
+                    );
+                $("#borrowalRequestsTableBody")
                     .empty()
                     .append(
                         "<tr><td colspan='6'>Oops! No successful borrowals found.</td></tr>"
