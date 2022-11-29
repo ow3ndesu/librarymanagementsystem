@@ -124,6 +124,24 @@ if (isset($_SESSION["authenticated"])) {
         <script src="../assets/js/popup.js"></script>
         <script src="../assets/js/custom.js"></script>
         <script src="../assets/js/auth.js"></script>
+        <?php 
+            if ($_SESSION['isCompleted'] != 1) {
+                echo '<script>
+                    Swal.fire({
+                        title: \'Let us take a moment and complete your profile.\',
+                        text: "Please proceed to profile.",
+                        icon: \'info\',
+                        confirmButtonColor: \'#3085d6\',
+                        confirmButtonText: \'Okay\',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = \'profile.page.php\';
+                        }
+                    })
+                </script>';
+            }
+        ?>
     </body>
 
     </html>

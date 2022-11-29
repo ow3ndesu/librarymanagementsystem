@@ -74,7 +74,7 @@ function loadBooks() {
             if (response.MESSAGE == "BOOKS_LOADED") {
                 $("#allbooks").empty();
                 response.BOOKS.forEach((element) => {
-                    const divhead = (is_completed != 0) ? `<div class="col-lg-3 col-sm-6" role="button" onclick="borrowBook(\'`+ element.book_id +`\', \'` + element.title + `\')">` : `<div class="col-lg-3 col-sm-6">`;;
+                    const divhead = (is_completed != 0) ? `<div class="col-lg-3 col-sm-6" <?php ($_SESSION['isCompleted'] == 1) ? (echo 'role="button" onclick="borrowBook(\'`+ element.book_id +`\', \'` + element.title + `\')"') : '' ?> >` : `<div class="col-lg-3 col-sm-6">`;;
                     $("#allbooks").append(
                         ``+ divhead +`
                         

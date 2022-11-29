@@ -318,7 +318,6 @@ function openCompleteProfileModal() {
                 if (
                     student_id == "" ||
                     firstname == "" ||
-                    middlename == "" ||
                     lastname == "" ||
                     address == "" ||
                     contact_no == ""

@@ -51,8 +51,8 @@ $("#signinbtn").click(function () {
           });
         } else if (res.MESSAGE === "INCORRECT_COMBINATION") {
           Swal.fire({
-            title: "Oopps!",
-            text: "Authentication Failed!",
+            title: "Authentication Error!",
+            text: "Username or password do not match!",
             icon: "error",
             preConfirm: function () {
               $("#login-form")[0].reset();
@@ -61,8 +61,8 @@ $("#signinbtn").click(function () {
           });
         } else if (res.MESSAGE === "NO_USER_FOUND") {
           Swal.fire({
-            title: "Oopps! Create an account first!",
-            text: "Authentication Failed!",
+            title: "This account do not exist.",
+            text: "Create account first.",
             icon: "error",
             preConfirm: function () {
               $("#login-form")[0].reset();

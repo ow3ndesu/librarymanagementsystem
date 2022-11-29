@@ -63,7 +63,7 @@ class Process extends Database
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
 
-        $sql = "SELECT * FROM users WHERE email = ?;";
+        $sql = "SELECT u.*, IF(s.is_completed IS NULL, 0, s.is_completed) AS isCompleted FROM users u LEFT JOIN students s ON s.user_id = u.user_id WHERE email = ?;";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -77,6 +77,7 @@ class Process extends Database
                     $_SESSION["authenticated"] = "1";
                     $_SESSION["userid"] = $row["user_id"];
                     $_SESSION["user_type"] = $row["user_type"];
+                    $_SESSION["isCompleted"] = $row["isCompleted"];
                     $url = "pages/home.page.php";
 
                     if ($row["user_type"] == "ADMIN") {

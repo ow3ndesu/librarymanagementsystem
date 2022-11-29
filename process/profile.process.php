@@ -118,7 +118,7 @@ class Process extends Database
 
         if ($stmt->execute()) {
             $stmt->close();
-
+            $_SESSION['isCompleted'] = 1;
             echo 'UPDATE_SUCCESSFUL';
         } else {
             $stmt->close();
