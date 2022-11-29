@@ -288,7 +288,7 @@ section {
 }
 
 .heading-section h4 em {
-    color: #fff;
+    color: #5e85b4;
     font-style: normal;
     text-decoration: underline;
 }
@@ -476,7 +476,7 @@ Header Style
 }
 
 .header-area .main-nav .logo img {
-    width: 45px;
+    width: 291px;
 }
 
 .background-header .main-nav .logo {
@@ -850,7 +850,7 @@ Banner Style
 
 .main-banner h6 {
     font-size: 20px;
-    color: #fff;
+    color: rgb(93, 126, 187);
     font-weight: 400;
     margin-bottom: 25px;
 }

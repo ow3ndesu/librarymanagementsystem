@@ -53,7 +53,7 @@ if (isset($_SESSION["authenticated"])) {
                         <nav class="main-nav">
                             <!-- ***** Logo Start ***** -->
                             <a href="#" class="logo">
-                                <img src="../assets/img/logo-darker.svg" alt=""> | Library Management S. </img>
+                                <img src="../assets/img/logo.svg" alt="" ></img>
                             </a>
                             <!-- ***** Logo End ***** -->
                             <!-- ***** Search End ***** -->
