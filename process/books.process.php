@@ -41,7 +41,7 @@ class Process extends Database
     {
         $book = [];
         $sanitize = new Sanitize();
-        $book_id = $sanitize->sanitizeForEmail($data["book_id"]);
+        $book_id = $sanitize->sanitizeForString($data["book_id"]);
         $bookloaded = "BOOK_LOADED";
         $nodata = "NO_DATA";
 
@@ -117,12 +117,12 @@ class Process extends Database
     public function UpdateBook($data)
     {
         $sanitize = new Sanitize();
-        $book_id = $sanitize->sanitizeForEmail($data["book_id"]);
-        $title = $sanitize->sanitizeForEmail($data["title"]);
-        $author = $sanitize->sanitizeForEmail($data["author"]);
-        $description = $sanitize->sanitizeForEmail($data["description"]);
-        $quantity = $sanitize->sanitizeForEmail($data["quantity"]);
-        $status = $sanitize->sanitizeForEmail($data["status"]);
+        $book_id = $sanitize->sanitizeForString($data["book_id"]);
+        $title = $sanitize->sanitizeForString($data["title"]);
+        $author = $sanitize->sanitizeForString($data["author"]);
+        $description = $sanitize->sanitizeForString($data["description"]);
+        $quantity = $sanitize->sanitizeForString($data["quantity"]);
+        $status = $sanitize->sanitizeForString($data["status"]);
 
         $stmt = $this->conn->prepare("UPDATE books SET title = ?, author = ?, description = ?, quantity = ?, status = ? WHERE book_id = ?;");
         $stmt->bind_param("ssssss", $title, $author, $description, $quantity, $status, $book_id);
@@ -139,7 +139,7 @@ class Process extends Database
     public function DeleteBook($data)
     {
         $sanitize = new Sanitize();
-        $book_id = $sanitize->sanitizeForEmail($data["book_id"]);
+        $book_id = $sanitize->sanitizeForString($data["book_id"]);
 
         $stmt = $this->conn->prepare("DELETE FROM books WHERE book_id = ?;");
         $stmt->bind_param("s", $book_id);

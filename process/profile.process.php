@@ -105,12 +105,12 @@ class Process extends Database
     public function UpdateProfile($data)
     {
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
-        $firstname = $sanitize->sanitizeForEmail($data["firstname"]);
-        $middlename = $sanitize->sanitizeForEmail($data["middlename"]);
-        $lastname = $sanitize->sanitizeForEmail($data["lastname"]);
-        $address = $sanitize->sanitizeForEmail($data["address"]);
-        $contact_no = $sanitize->sanitizeForEmail($data["contact_no"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
+        $firstname = $sanitize->sanitizeForString($data["firstname"]);
+        $middlename = $sanitize->sanitizeForString($data["middlename"]);
+        $lastname = $sanitize->sanitizeForString($data["lastname"]);
+        $address = $sanitize->sanitizeForString($data["address"]);
+        $contact_no = $sanitize->sanitizeForString($data["contact_no"]);
         $is_completed = 1;
 
         $stmt = $this->conn->prepare("UPDATE students SET firstname = ?, middlename = ?, lastname = ?, address = ?, contact_no = ?, is_completed = ? WHERE student_id = ?;");
@@ -129,7 +129,7 @@ class Process extends Database
     // public function DeleteUserAccount($data)
     // {
     //     $sanitize = new Sanitize();
-    //     $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+    //     $user_id = $sanitize->sanitizeForString($data["user_id"]);
 
     //     $stmt = $this->conn->prepare("DELETE FROM users WHERE user_id = ?;");
     //     $stmt->bind_param("s", $user_id);

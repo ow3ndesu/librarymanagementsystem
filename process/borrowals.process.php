@@ -79,7 +79,7 @@ class Process extends Database
     {
         $borrowal = [];
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
         $borrowalloaded = "BORROWAL_LOADED";
         $nodata = "NO_DATA";
 
@@ -109,8 +109,8 @@ class Process extends Database
     public function EditBorrowalStatus($data)
     {
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
-        $status = $sanitize->sanitizeForEmail($data["status"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
+        $status = $sanitize->sanitizeForString($data["status"]);
         $modified_at = date('m/d/Y');
         $admin_id = $_SESSION['admin_id'];
 
@@ -146,7 +146,7 @@ class Process extends Database
     public function DeleteBorrowal($data)
     {
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
 
         $stmt = $this->conn->prepare("DELETE FROM borrowals WHERE borrow_id = ?;");
         $stmt->bind_param("s", $borrow_id);
@@ -164,7 +164,7 @@ class Process extends Database
 
     public function BorrowBook($data) {
         $sanitize = new Sanitize();
-        $book_id = $sanitize->sanitizeForEmail($data["book_id"]);
+        $book_id = $sanitize->sanitizeForString($data["book_id"]);
         $borrow_id = $sanitize->generateBWID();
         $student_id = $_SESSION['student_id'];
         $status = "PENDING";
@@ -192,7 +192,7 @@ class Process extends Database
     {
         $borrowals = [];
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
         $sql = "SELECT b.borrow_id, bo.book_id, bo.image, bo.copy, bo.title, bo.author, bo.status AS bookstatus, s.student_id, s.lastname, b.status, b.filed, b.due FROM ((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) WHERE b.status != 'RETURNING' AND b.status != 'RETURNED' AND b.status != 'CANCELED' AND b.student_id = ? ORDER BY b.id DESC;";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $student_id);
@@ -224,9 +224,9 @@ class Process extends Database
     public function EditMyBorrowalStatus($data)
     {
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
-        $status = $sanitize->sanitizeForEmail($data["status"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
+        $status = $sanitize->sanitizeForString($data["status"]);
         $modified_at = date('m/d/Y');
 
 

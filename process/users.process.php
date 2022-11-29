@@ -71,7 +71,7 @@ class Process extends Database
     {
         $user = [];
         $sanitize = new Sanitize();
-        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+        $user_id = $sanitize->sanitizeForString($data["user_id"]);
         $userloaded = "USER_LOADED";
         $nodata = "NO_DATA";
 
@@ -99,8 +99,8 @@ class Process extends Database
     public function EditUserStatus($data)
     {
         $sanitize = new Sanitize();
-        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
-        $status = $sanitize->sanitizeForEmail($data["status"]);
+        $user_id = $sanitize->sanitizeForString($data["user_id"]);
+        $status = $sanitize->sanitizeForString($data["status"]);
 
         $stmt = $this->conn->prepare("UPDATE users SET status = ? WHERE user_id = ?;");
         $stmt->bind_param("ss", $status, $user_id);
@@ -140,7 +140,7 @@ class Process extends Database
     public function DeleteUserAccount($data)
     {
         $sanitize = new Sanitize();
-        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+        $user_id = $sanitize->sanitizeForString($data["user_id"]);
 
         $stmt = $this->conn->prepare("DELETE FROM students WHERE user_id = ?;");
         $stmt->bind_param("s", $user_id);

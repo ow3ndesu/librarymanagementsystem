@@ -47,7 +47,7 @@ class Process extends Database
     {
         $return = [];
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
         $returnloaded = "RETURN_LOADED";
         $nodata = "NO_DATA";
 
@@ -77,8 +77,8 @@ class Process extends Database
     public function EditReturnStatus($data)
     {
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
-        $status = $sanitize->sanitizeForEmail($data["status"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
+        $status = $sanitize->sanitizeForString($data["status"]);
         $reason = $sanitize->sanitizeForString($data["reason"]);
         $modified_at = date('m/d/Y');
         $admin_id = $_SESSION['admin_id'];
@@ -127,7 +127,7 @@ class Process extends Database
     public function DeleteReturn($data)
     {
         $sanitize = new Sanitize();
-        $borrow_id = $sanitize->sanitizeForEmail($data["borrow_id"]);
+        $borrow_id = $sanitize->sanitizeForString($data["borrow_id"]);
 
         $stmt = $this->conn->prepare("DELETE b, r FROM borrowals b INNER JOIN returns r ON r.borrow_id = b.borrow_id WHERE b.borrow_id = ?;");
         $stmt->bind_param("s", $borrow_id);

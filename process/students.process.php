@@ -41,7 +41,7 @@ class Process extends Database
     {
         $student = [];
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
         $studentloaded = "STUDENT_LOADED";
         $nodata = "NO_DATA";
 
@@ -69,7 +69,7 @@ class Process extends Database
     public function AddStudent($data)
     {
         $sanitize = new Sanitize();
-        $user_id = $sanitize->sanitizeForEmail($data["user_id"]);
+        $user_id = $sanitize->sanitizeForString($data["user_id"]);
 
         $stmt = $this->conn->prepare("UPDATE users SET status = 'ENABLED' WHERE user_id = ?;");
         $stmt->bind_param("s", $user_id);
@@ -106,12 +106,12 @@ class Process extends Database
     public function UpdateStudent($data)
     {
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
-        $firstname = $sanitize->sanitizeForEmail($data["firstname"]);
-        $middlename = $sanitize->sanitizeForEmail($data["middlename"]);
-        $lastname = $sanitize->sanitizeForEmail($data["lastname"]);
-        $address = $sanitize->sanitizeForEmail($data["address"]);
-        $contact_no = $sanitize->sanitizeForEmail($data["contact_no"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
+        $firstname = $sanitize->sanitizeForString($data["firstname"]);
+        $middlename = $sanitize->sanitizeForString($data["middlename"]);
+        $lastname = $sanitize->sanitizeForString($data["lastname"]);
+        $address = $sanitize->sanitizeForString($data["address"]);
+        $contact_no = $sanitize->sanitizeForString($data["contact_no"]);
         $created_at = $sanitize->sanitizeForString($data["created_at"]);
 
         $stmt = $this->conn->prepare("UPDATE students SET firstname = ?, middlename = ?, lastname = ?, address = ?, contact_no = ?, created_at = ? WHERE student_id = ?;");
@@ -130,7 +130,7 @@ class Process extends Database
     public function DeleteStudent($data)
     {
         $sanitize = new Sanitize();
-        $student_id = $sanitize->sanitizeForEmail($data["student_id"]);
+        $student_id = $sanitize->sanitizeForString($data["student_id"]);
 
         $stmt = $this->conn->prepare("DELETE FROM students WHERE student_id = ?;");
         $stmt->bind_param("s", $student_id);
