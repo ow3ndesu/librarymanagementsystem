@@ -416,7 +416,7 @@ function viewStudent(student_id) {
 
 function deleteStudent(student_id) {
     Swal.fire({
-        title: "Delete Book?",
+        title: "Delete Student?",
         icon: "question",
         showCancelButton: true,
         showLoaderOnConfirm: true,

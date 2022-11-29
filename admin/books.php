@@ -200,7 +200,7 @@ if (isset($_SESSION["admin-auth"])) {
                     <tbody id="booksTableBody">
 
                     </tbody>
-                    <tfoot>
+                    <!-- <tfoot>
                       <tr>
                         <th>Book ID</th>
                         <th>Title</th>
@@ -209,7 +209,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
-                    </tfoot>
+                    </tfoot> -->
                     <tbody></tbody>
                   </table>
                 </div>

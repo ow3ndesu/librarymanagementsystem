@@ -115,7 +115,7 @@ function loadProfile() {
                         $("#profileRemarks")
                             .empty()
                             .text(
-                                "You Haven't Completed Your Account yet. Go Complete It By Clicking The Buutton Below."
+                                "You Haven't Completed Your Account yet. Go Complete It By Clicking The Button Below."
                             );
                         $("#student_id").val(element.student_id);
                         $("#firstname").val(element.firstname);

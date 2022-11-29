@@ -293,7 +293,7 @@ if (isset($_SESSION["admin-auth"])) {
                     <tbody id="studentsTableBody">
 
                     </tbody>
-                    <tfoot>
+                    <!-- <tfoot>
                       <tr>
                         <th>Student ID</th>
                         <th>Firstname</th>
@@ -302,7 +302,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Contact No.</th>
                         <th>Action</th>
                       </tr>
-                    </tfoot>
+                    </tfoot> -->
                     <tbody></tbody>
                   </table>
                 </div>
@@ -354,13 +354,13 @@ if (isset($_SESSION["admin-auth"])) {
               <tbody id="usersTableBody">
 
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr>
                   <th>User ID</th>
                   <th>Username</th>
                   <th class="text-center">Action</th>
                 </tr>
-              </tfoot>
+              </tfoot> -->
               <tbody></tbody>
             </table>
           </div>
