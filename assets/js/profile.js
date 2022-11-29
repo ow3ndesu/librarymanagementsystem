@@ -379,7 +379,12 @@ function openCompleteProfileModal() {
 function readBook(file, title) {
     $('#readBookModal').modal('show');
     $('#readBookModal').find('#modalBookTitle').empty().text(title);
-    $('#readBookModal').find('iframe').attr('src','../assets/uploaded/copies/'+ file +'');
+    $('#readBookModal').find('#bookcontainer').attr('src','../assets/uploaded/copies/'+ file +'#toolbar=0');
+    $('#bookcontainer').on("contextmenu", function(e){
+        e.preventDefault();
+    }).bind('cut copy paste', function (e) {
+        e.preventDefault();
+    });
 }
 
 function cancelBorrowal(borrow_id) {

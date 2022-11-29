@@ -255,7 +255,7 @@ if (isset($_SESSION["authenticated"])) {
                     </button>
                   </div>
                   <div class="modal-body">
-                    <iframe frameborder="0" width="100%" height="480px"></iframe>
+                    <embed allowfullscreen id="bookcontainer" frameborder="0" width="100%" height="480px" />
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary close-read-modal" data-dismiss="modal">Close</button>
