@@ -22,7 +22,7 @@ function loadInbox() {
             response.INBOX.forEach(element => {
                 $("#inboxcontainer").append(`
                     <div class="item border mb-2 p-2 d-flex justify-content-between" style=" border-radius: 20px; margin: auto;" role="button" onclick="openMessage(\'`+ element.student_id +`\')">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <img src="../assets/images/avatar-0`+ (Math.floor(Math.random() * (4 - 1 + 1) + 1)) +`.jpg" alt="avatar" class="avatar mr-4" style="border-radius: 50%; width="50px" height="50px">
                             <div>
                                 <div><b>`+ capitalizeFirstLetter((element.firstname) + ' ' + capitalizeFirstLetter(element.middlename) + ' ' + capitalizeFirstLetter(element.lastname)) +`</b></div>
