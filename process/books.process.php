@@ -10,7 +10,7 @@ class Process extends Database
     public function LoadBooks()
     {
         $books = [];
-        (isset($_SESSION['admin_id'])) ? $sql = "SELECT * FROM books;" : $sql = "SELECT * FROM books WHERE quantity != '0';";
+        (isset($_SESSION['admin_id'])) ? $sql = "SELECT * FROM books;" : $sql = "SELECT * FROM books WHERE quantity != '0' AND status != 'INACTIVE';";
         $stmt = $this->conn->prepare($sql);
 
         if ($stmt->execute()) {

@@ -199,7 +199,7 @@ function loadBorrowedBooks() {
                             </li>
                             <li>
                                 <h4>Currently</h4><span>` +
-                            element.status +
+                            ((element.bookstatus == 'INACTIVE') ? element.bookstatus : element.status) +
                             `</span>
                             </li>
                             <li>
@@ -214,10 +214,11 @@ function loadBorrowedBooks() {
 
                     const due = parseInt(Date.parse(element.due));
                     const now = parseInt(Date.now());
+                    const status = element.bookstatus;
 
                     console.log(due, now, (due >= now))
 
-                    if (due >= now) {
+                    if (status != 'INACTIVE' && (due >= now)) {
                         $(".book-cover-" + element.borrow_id + "").css('cursor', 'pointer').attr('onclick', 'readBook(\'' + element.copy + '\', \'' + element.title + '\')').attr('title', 'Read Book');
                     }
                 });
