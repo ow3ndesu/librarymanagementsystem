@@ -7,6 +7,7 @@ include_once("sanitize.process.php");
 
 class Process extends Database
 {
+
     public function Register($data)
     {
         $sanitize = new Sanitize();
@@ -78,6 +79,7 @@ class Process extends Database
                     $_SESSION["user_type"] = $row["user_type"];
                     $_SESSION["isCompleted"] = $row["isCompleted"];
                     $url = "pages/home.page.php";
+                    $_SESSION['attempts'] = 3;
 
                     if ($row["user_type"] == "ADMIN") {
                         $_SESSION["admin-auth"] = "1";
@@ -98,8 +100,10 @@ class Process extends Database
                     ));
                 }
             } else {
+                $_SESSION['attempts'] = $_SESSION['attempts'] - 1;
                 echo json_encode(array(
                     "MESSAGE" => "INCORRECT_COMBINATION",
+                    "ATTEMPTS" => $_SESSION['attempts']
                 ));
             }
         } else {
@@ -156,6 +160,8 @@ class Process extends Database
     {
         if (session_destroy()) {
             echo "LOGOUT_SUCCESS";
+            session_start();
+            $_SESSION['attempts'] = 3;
         } else {
             echo "LOGOUT_UNSUCCESSFUL";
         }

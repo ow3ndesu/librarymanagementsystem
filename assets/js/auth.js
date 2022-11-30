@@ -1,4 +1,29 @@
+$(document).ready(function () {
+  const attempts = $("#attempts").val();
+  if (attempts <= 0) {
+    let interval = 30;
+    setInterval(function () {
+      interval--;
+      $('.form-submit-disabled').val(interval);
+    }, 1000);
+
+    setTimeout(function() {
+      $.ajax({
+        url: "routes/auth.route.php",
+        type: "POST",
+        data: {
+          action: "Logout",
+        },
+        success: function () {
+          window.location.reload();
+        }
+      });
+    }, 30000);
+  }
+});
+
 $("#signinbtn").click(function () {
+  const attempts = $("#attempts").val();
   const email = $("#logemail").val();
   const password = $("#logpassword").val();
 
@@ -50,14 +75,19 @@ $("#signinbtn").click(function () {
             },
           });
         } else if (res.MESSAGE === "INCORRECT_COMBINATION") {
+          $("#attempts").val(res.ATTEMPTS);
           Swal.fire({
             title: "Authentication Error!",
-            text: "Username or password do not match!",
+            text: "Username or password do not match! " + res.ATTEMPTS + " attempt/s left.",
             icon: "error",
             preConfirm: function () {
               $("#login-form")[0].reset();
               $(".submit-btn").removeClass("spinner-border");
             },
+          }).then(() => {
+            if (res.ATTEMPTS == 0) {
+              window.location.reload();
+            }
           });
         } else if (res.MESSAGE === "NO_USER_FOUND") {
           Swal.fire({

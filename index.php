@@ -20,7 +20,7 @@
 </head>
 
 <body class="text-center">
-
+    <input type="hidden" name="attempts" id="attempts" value="<?php session_start(); echo ((isset($_SESSION['attempts'])) ? $_SESSION['attempts'] : 3); ?>">
     <div class="main">
 
         <!-- Sign up form -->
@@ -88,7 +88,7 @@
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
                             <div class="form-group form-button submit-btn" role="status">
-                                <input type="button" id="signinbtn" class="form-submit" value="Log in" />
+                                <input type="button" <?php if ($_SESSION['attempts'] > 0) { ?> id="signinbtn" class="form-submit" <?php } else { ?> class="form-submit-disabled" disabled <?php } ?> value="Log in"/>
                             </div>
                             <a href="#" class="signup-image-link signup-link">Create an account</a>
                         </form>
