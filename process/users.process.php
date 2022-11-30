@@ -107,6 +107,18 @@ class Process extends Database
 
         if ($stmt->execute()) {
             $stmt->close();
+
+            $stmt = $this->conn->prepare("SELECT receiver FROM users WHERE user_id = ?;");
+            $stmt->bind_param("s", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            include_once('email.process.php');
+            $email = new Email;
+            $email->SendAccountStatusEmailNotification($row['receiver'], $status);
+
             if ($status = 'ENABLED') {
                 $stmt = $this->conn->prepare("SELECT * FROM students WHERE user_id = ?");
                 $stmt->bind_param("s", $user_id);

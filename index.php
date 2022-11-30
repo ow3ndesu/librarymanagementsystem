@@ -35,6 +35,10 @@
                                 <input type="text" id="email" placeholder="Username" minlength="4" />
                             </div>
                             <div class="form-group">
+                                <label for="email2"><i class="zmdi zmdi-inbox"></i></label>
+                                <input type="email" id="email2" placeholder="Email" minlength="4" />
+                            </div>
+                            <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" id="pass" placeholder="Password" minlength="8" />
                             </div>

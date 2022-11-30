@@ -123,6 +123,17 @@ class Process extends Database
         if ($stmt->execute()) {
             $stmt->close();
 
+            $stmt = $this->conn->prepare("SELECT u.receiver FROM ((borrowals b LEFT JOIN students s ON s.student_id = b.student_id) LEFT JOIN users u ON u.user_id = s.user_id) WHERE b.borrow_id = ?;");
+            $stmt->bind_param("s", $borrow_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            include_once('email.process.php');
+            $email = new Email;
+            $email->SendBorrowalStatusEmailNotification($row['receiver'], $status);
+
             $stmt1->execute();
             $res1 = $stmt1->get_result();
             $stmt1->close();

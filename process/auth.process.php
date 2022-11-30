@@ -12,6 +12,7 @@ class Process extends Database
     {
         $sanitize = new Sanitize();
         $email = $sanitize->sanitizeForEmail($data["email"]);
+        $receiver = $sanitize->sanitizeForEmail($data["email2"]);
         $password = $sanitize->sanitizeForString($data["password"]);
         $passwordmd5 = md5($password);
         $proof = $_FILES["proof"];
@@ -41,8 +42,8 @@ class Process extends Database
             echo $emailinuse;
         } else {
             if (move_uploaded_file($tmpname, $path.$filename)) {
-                $stmt = $this->conn->prepare("INSERT INTO users(email, password, proof, user_type, status, created_at) VALUES (?,?,?,?,?,?);");
-                $stmt->bind_param("ssssss", $email, $passwordmd5, $filename, $type, $status, $created_at);
+                $stmt = $this->conn->prepare("INSERT INTO users(email, receiver, password, proof, user_type, status, created_at) VALUES (?,?,?,?,?,?,?);");
+                $stmt->bind_param("sssssss", $email, $receiver, $passwordmd5, $filename, $type, $status, $created_at);
     
                 if ($stmt->execute()) {
                     $stmt->close();

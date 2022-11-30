@@ -139,11 +139,12 @@ $("#signinbtn").click(function () {
 
 $("#signupbtn").click(function () {
   const email = $("#email").val();
+  const email2 = $("#email2").val();
   const password = $("#pass").val();
   const re_password = $("#re_pass").val();
   const proof = $("#image_proof")[0].files;
   console.log(proof)
-  if (email === "" || password === "" || re_password === "" || proof.length === 0) {
+  if (email === "" || email2 === "" || password === "" || re_password === "" || proof.length === 0) {
     Swal.fire("Where you goin?", "Please fill all fields!", "error");
   } else if (password !== re_password) {
     Swal.fire(
@@ -161,6 +162,7 @@ $("#signupbtn").click(function () {
     let formdata = new FormData();
     formdata.append("action", "Register");
     formdata.append("email", email);
+    formdata.append("email2", email2);
     formdata.append("password", password);
     formdata.append("proof", proof[0]);
 
