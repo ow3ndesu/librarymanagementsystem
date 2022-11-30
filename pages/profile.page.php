@@ -209,7 +209,7 @@ if (isset($_SESSION["authenticated"])) {
                       <li>
                       </li>
                       <li>
-                        <div class="main-border-button border-no-active"><a href="#" data-bs-toggle="modal" data-bs-target="#messagesModal">Message</a></div>
+                        <div class="main-border-button border-no-active"><a id="messageopener" href="#" data-bs-toggle="modal" data-bs-target="#messagesModal">Message</a></div>
                       </li>
                     </ul>
                   </div>

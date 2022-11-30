@@ -123,6 +123,7 @@ function loadProfile() {
                         $("#lastname").val(element.lastname);
                         $("#address").val(element.address);
                         $("#contact_no").val(element.contact_no);
+                        $("#messageopener").removeAttr('data-bs-target').text('Disabled').css('cursor', 'default');
 
                         // loadBorrowedBooks(element.student_id);
                     } else {
@@ -130,6 +131,7 @@ function loadProfile() {
 
                         $("#status").empty().text("Completed");
                         $("#eligible").empty().text("Yes");
+                        $("#messageopener").attr('data-bs-target', '#messagesModal').text('Message').css('cursor', 'pointer');
 
                         $("#profileActionButton").empty().append(`
                             <a href="browse.page.php">Browse Books</a>
