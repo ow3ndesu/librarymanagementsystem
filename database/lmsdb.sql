@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2022 at 10:50 PM
+-- Generation Time: Dec 02, 2022 at 08:45 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -73,12 +73,12 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `book_id`, `image`, `copy`, `title`, `author`, `description`, `quantity`, `status`, `remarks`, `inserted_by`, `inserted_at`) VALUES
-(21, 'BOOK000TFGQ10', 'the-book.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'The Book', 'Arter', 'Get Your Art', 76, 'ACTIVE', '-', 'ADMIN000001', '10/30/2022'),
+(21, 'BOOK000TFGQ10', 'the-book.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'The Book', 'Arter', 'Get Your Art', 78, 'ACTIVE', '-', 'ADMIN000001', '10/30/2022'),
 (23, 'BOOK000SLCNJ1', 'lunar-storm.jpeg', 'BOOK000INEPM1-sad;jasd;.pdf', 'Lunar Storm', 'Stormy', 'Lunatic', 28, 'ACTIVE', '-', 'ADMIN000001', '10/30/2022'),
 (24, 'BOOK000PWLGF7', 'memory-imp.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'The Imperfections of Memory', 'Angelina', 'Memories', 6, 'ACTIVE', '-', 'ADMIN000001', '10/30/2022'),
-(25, 'BOOK000X5KCHV', 'we-lost.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'TheMemoryWeLost', 'Mike', 'Roberts', 5, 'ACTIVE', '-', 'ADMIN000001', '11/02/2022'),
+(25, 'BOOK000X5KCHV', 'we-lost.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'The Memory We Lost', 'Mike', 'Roberts', 5, 'ACTIVE', '-', 'ADMIN000001', '11/02/2022'),
 (28, 'BOOK000NMXZ37', 'BOOK000NMXZ37-kjbsakjbdkabv.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'YTS Guideline', 'YTS Team', 'How to do torrent?', 93, 'ACTIVE', '-', 'ADMIN000001', '11/16/2022'),
-(29, 'BOOK000INEPM1', 'BOOK000INEPM1-sad;jasd;.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'dasdasd', 'sad;jasd;', 'asdasddas', 3, 'ACTIVE', '-', 'ADMIN000001', '11/21/2022');
+(29, 'BOOK000INEPM1', 'BOOK000INEPM1-sad;jasd;.jpg', 'BOOK000INEPM1-sad;jasd;.pdf', 'dasdasd', 'sadjasd', 'asdasddas', 3, 'INACTIVE', '-', 'ADMIN000001', '11/21/2022');
 
 -- --------------------------------------------------------
 
@@ -106,7 +106,9 @@ INSERT INTO `borrowals` (`id`, `borrow_id`, `book_id`, `student_id`, `status`, `
 (3, 'BORROW1S5A21CA5', 'BOOK000PWLGF7', 'STUD0003IAVZX', 'RETURNED', '11/04/2022', '11/14/2022', 'ADMIN000001', '11/26/2022'),
 (16, 'BORROW000GNXYH4', 'BOOK000PWLGF7', 'STUD0003IAVZX', 'RETURNED', '11/17/2022', '11/27/2022', 'ADMIN000001', '11/17/2022'),
 (17, 'BORROW000LVTZ5X', 'BOOK000INEPM1', 'STUD0003IAVZX', 'BORROWED', '11/21/2022', '12/01/2022', 'ADMIN000001', '11/26/2022'),
-(18, 'BORROW000GXMT5O', 'BOOK000NMXZ37', 'STUD0003IAVZX', 'BORROWED', '11/24/2022', '12/04/2022', 'ADMIN000001', '11/24/2022');
+(18, 'BORROW000GXMT5O', 'BOOK000NMXZ37', 'STUD0003IAVZX', 'BORROWED', '11/24/2022', '12/04/2022', 'ADMIN000001', '11/24/2022'),
+(19, 'BORROW000VJPN3K', 'BOOK000NMXZ37', 'STUD000FCE17D', 'RETURNED', '11/30/2022', '12/10/2022', 'ADMIN000001', '11/30/2022'),
+(20, 'BORROW0007W6FN9', 'BOOK000TFGQ10', 'STUD000R4PVCS', 'RETURNED', '12/01/2022', '12/11/2022', 'ADMIN000001', '12/01/2022');
 
 -- --------------------------------------------------------
 
@@ -163,7 +165,11 @@ CREATE TABLE `returns` (
 INSERT INTO `returns` (`id`, `borrow_id`, `remarks`, `returned_at`) VALUES
 (10, 'BORROW1S5A21CA5', '', '11/08/2022'),
 (11, 'BORROW000GNXYH4', '', '11/17/2022'),
-(12, 'BORROW1S5A21CA5', '', '11/26/2022');
+(12, 'BORROW1S5A21CA5', '', '11/26/2022'),
+(13, 'BORROW000VJPN3K', '', '11/30/2022'),
+(14, 'BORROW0007W6FN9', '', '12/01/2022'),
+(15, 'BORROW0007W6FN9', '', '12/01/2022'),
+(16, 'BORROW0007W6FN9', '', '12/01/2022');
 
 -- --------------------------------------------------------
 
@@ -189,10 +195,11 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `student_id`, `user_id`, `firstname`, `middlename`, `lastname`, `address`, `contact_no`, `is_completed`, `created_at`) VALUES
-(1, 'STUD0003IAVZX', 4, 'Juan', 'Pablo', 'Dela Cruz', 'Pag-Asa', '0905985511', 1, '10/30/2022'),
-(3, 'STUD000R4PVCS', 6, 'Jon', 'Stark', 'Snow', 'Winterfell', '09067894410', 1, '11/03/2022'),
-(5, 'STUD000FCE17D', 7, '', '', '', '', '', 0, '11/26/2022'),
-(7, 'STUD000UCPR37', 9, '', '', '', '', '', 0, '11/26/2022');
+(1, 'STUD0003IAVZX', 4, 'JUAN', 'PABLO', 'DELA CRUZ', 'Pag-Asa', '0905985511', 1, '10/30/2022'),
+(3, 'STUD000R4PVCS', 6, 'JON', 'STARK', 'SNOW', 'Winterfell', '09067894410', 1, '11/03/2022'),
+(5, 'STUD000FCE17D', 7, 'LUIS', '', 'SAN JUAN', 'SOMEHEREST.', '09123456789', 1, '11/26/2022'),
+(7, 'STUD000UCPR37', 9, 'JULIA', 'ORTIZ', 'LUIS', 'STO DOMINGO', '09123456789', 1, '11/26/2022'),
+(8, 'STUD0001BJVNF', 10, 'MEME', '', 'EMAM', 'SOMEWHERE ST.', '09123456789', 1, '12/01/2022');
 
 -- --------------------------------------------------------
 
@@ -203,6 +210,7 @@ INSERT INTO `students` (`id`, `student_id`, `user_id`, `firstname`, `middlename`
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `receiver` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `proof` varchar(255) NOT NULL,
   `user_type` varchar(45) NOT NULL,
@@ -214,12 +222,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `email`, `password`, `proof`, `user_type`, `status`, `created_at`) VALUES
-(1, '@adminacc', '5b94c55fc69d8d32275862a930ebb46f', '@student4-536.jpg', 'ADMIN', 'ENABLED', '10/19/2022'),
-(4, '@student2', '2c1ddc2fc774a31cbe18e8b3575d62cc', '@student4-536.jpg', 'Student', 'ENABLED', '10/30/2022'),
-(6, '@student3', '80ec8e02a3987d28fe68894658400e8c', '@student4-536.jpg', 'Student', 'ENABLED', '11/03/2022'),
-(7, '@student1', 'fe96821ecf1191932f631d60e620e466', '@student4-536.jpg', 'Student', 'ENABLED', '11/24/2022'),
-(9, '@student4', '4d53590c0a24c82a7530d1eeccae9558', '@student4-256.png', 'Student', 'ENABLED', '11/26/2022');
+INSERT INTO `users` (`user_id`, `email`, `receiver`, `password`, `proof`, `user_type`, `status`, `created_at`) VALUES
+(1, '@adminacc', 'test@gmail.com', '5b94c55fc69d8d32275862a930ebb46f', '@student4-536.jpg', 'ADMIN', 'ENABLED', '10/19/2022'),
+(4, '@student2', 'zinahmarieee@gmail.com', '2c1ddc2fc774a31cbe18e8b3575d62cc', '@student4-536.jpg', 'Student', 'ENABLED', '10/30/2022'),
+(6, '@student3', 'enguerra1111@gmail.com', '80ec8e02a3987d28fe68894658400e8c', '@student4-536.jpg', 'Student', 'ENABLED', '11/03/2022'),
+(7, '@student1', 'test@gmail.com', 'fe96821ecf1191932f631d60e620e466', '@student4-536.jpg', 'Student', 'ENABLED', '11/24/2022'),
+(9, '@student4', 'test@gmail.com', '4d53590c0a24c82a7530d1eeccae9558', '@student4-256.png', 'Student', 'ENABLED', '11/26/2022'),
+(10, '@student5', 'test@gmail.com', '81778092f0802a496a5990666db10095', '@student5-1570.jpg', 'Student', 'ENABLED', '11/29/2022'),
+(11, '@student7', 'test@gmail.com', '9888ae92687cfb6e65c31acc7aef0ca8', '@student7-1293.jpg', 'Student', 'DISABLED', '12/01/2022');
 
 --
 -- Indexes for dumped tables
@@ -298,7 +308,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `borrowals`
 --
 ALTER TABLE `borrowals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -310,19 +320,19 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `returns`
 --
 ALTER TABLE `returns`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
