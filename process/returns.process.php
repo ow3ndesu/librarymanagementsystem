@@ -11,7 +11,7 @@ class Process extends Database
     {
         $requests = [];
         $returns = [];
-        $sql = "SELECT b.borrow_id, bo.book_id, bo.title, s.student_id, s.lastname, b.status, b.filed, b.due, r.remarks, r.returned_at FROM (((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) LEFT JOIN returns r ON b.book_id = r.id) WHERE b.status = 'RETURNING' OR b.status = 'RETURNED' ORDER BY b.id DESC;";
+        $sql = "SELECT b.borrow_id, bo.book_id, bo.title, s.student_id, s.lastname, b.status, b.filed, b.due, b.modified_at, r.remarks, r.returned_at FROM (((borrowals b LEFT JOIN books bo ON b.book_id = bo.book_id) LEFT JOIN students s ON b.student_id = s.student_id) LEFT JOIN returns r ON b.borrow_id = r.borrow_id) WHERE b.status = 'RETURNING' OR b.status = 'RETURNED' ORDER BY b.id DESC;";
         $stmt = $this->conn->prepare($sql);
 
         if ($stmt->execute()) {

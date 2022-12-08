@@ -285,6 +285,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Book</th>
                         <th>Student</th>
                         <th>Filed</th>
+                        <th>Return</th>
                         <th>Due</th>
                         <th>Action</th>
                       </tr>
@@ -323,6 +324,7 @@ if (isset($_SESSION["admin-auth"])) {
                         <th>Book</th>
                         <th>Student</th>
                         <th>Filed</th>
+                        <th>Return</th>
                         <th>Due</th>
                         <th>Action</th>
                       </tr>

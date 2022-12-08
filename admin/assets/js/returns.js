@@ -69,6 +69,9 @@ function loadReturns() {
                             element.filed +
                             `</td>
                             <td>` +
+                            element.modified_at +
+                            `</td>
+                            <td>` +
                             element.due +
                             `</td>
                             <td class="text-center">
@@ -108,6 +111,9 @@ function loadReturns() {
                             `</td>
                             <td>` +
                             element.filed +
+                            `</td>
+                            <td>` +
+                            element.returned_at +
                             `</td>
                             <td>` +
                             element.due +
