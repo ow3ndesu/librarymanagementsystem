@@ -5,9 +5,9 @@ function loadEverything() {
     loadReturns();
     loadStudents();
 
-    $(window).on('load', function () {
-        downloadThis();
-    });
+    // $(window).on('load', function () {
+    //     downloadThis();
+    // });
 }
 
 function loadDashboard() {
@@ -52,9 +52,7 @@ function loadBooks() {
                     $("#booksTableBody").append(
                         `
                         <tr>
-                            <td>` +
-                            element.book_id +
-                            `</td>
+                            
                             <td>` +
                             element.title +
                             `</th>
@@ -104,9 +102,7 @@ function loadBorrowals() {
                     $("#borrowalsTableBody").append(
                         `
                         <tr>
-                            <td>` +
-                            element.borrow_id +
-                            `</td>
+                            
                             <td>` +
                             element.title +
                             `</th>
@@ -156,9 +152,7 @@ function loadReturns() {
                     $("#returnsTableBody").append(
                         `
                         <tr>
-                            <td>` +
-                            element.borrow_id +
-                            `</td>
+                            
                             <td>` +
                             element.title +
                             `</th>
@@ -208,9 +202,7 @@ function loadStudents() {
                     $("#studentsTableBody").append(
                         `
                         <tr>
-                            <td>` +
-                            element.student_id +
-                            `</td>
+                            
                             <td>` +
                             (element.firstname != ""
                                 ? element.firstname

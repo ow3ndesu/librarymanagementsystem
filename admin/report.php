@@ -170,7 +170,7 @@ if (isset($_SESSION["admin-auth"])) {
                       <table class="table table-bordered text-center" id="bookstable" width="100%" cellspacing="0">
                         <thead>
                           <tr>
-                            <th>Book ID</th>
+                            <!-- <th>Book ID</th> -->
                             <th>Title</th>
                             <th>Author</th>
                             <th>Quantity</th>
@@ -182,7 +182,7 @@ if (isset($_SESSION["admin-auth"])) {
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th>Book ID</th>
+                            <!-- <th>Book ID</th> -->
                             <th>Title</th>
                             <th>Author</th>
                             <th>Quantity</th>
@@ -215,7 +215,7 @@ if (isset($_SESSION["admin-auth"])) {
                       <table class="table table-bordered text-center" id="borrowalstable" width="100%" cellspacing="0">
                         <thead>
                           <tr>
-                            <th>Borrow ID</th>
+                            <!-- <th>Borrow ID</th> -->
                             <th>Book</th>
                             <th>Student</th>
                             <th>Filed</th>
@@ -227,7 +227,7 @@ if (isset($_SESSION["admin-auth"])) {
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th>Borrow ID</th>
+                            <!-- <th>Borrow ID</th> -->
                             <th>Book</th>
                             <th>Student</th>
                             <th>Filed</th>
@@ -260,7 +260,7 @@ if (isset($_SESSION["admin-auth"])) {
                       <table class="table table-bordered text-center" id="returnstable" width="100%" cellspacing="0">
                         <thead>
                           <tr>
-                            <th>Borrow ID</th>
+                            <!-- <th>Borrow ID</th> -->
                             <th>Book</th>
                             <th>Student</th>
                             <th>Filed</th>
@@ -272,7 +272,7 @@ if (isset($_SESSION["admin-auth"])) {
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th>Borrow ID</th>
+                            <!-- <th>Borrow ID</th> -->
                             <th>Book</th>
                             <th>Student</th>
                             <th>Filed</th>
@@ -305,7 +305,7 @@ if (isset($_SESSION["admin-auth"])) {
                       <table class="table table-bordered text-center" id="studentstable" width="100%" cellspacing="0">
                         <thead>
                           <tr>
-                            <th>Student ID</th>
+                            <!-- <th>Student ID</th> -->
                             <th>Firstname</th>
                             <th>Middlename</th>
                             <th>Lastname</th>
@@ -317,7 +317,7 @@ if (isset($_SESSION["admin-auth"])) {
                         </tbody>
                         <tfoot>
                           <tr>
-                            <th>Student ID</th>
+                            <!-- <th>Student ID</th> -->
                             <th>Firstname</th>
                             <th>Middlename</th>
                             <th>Lastname</th>
